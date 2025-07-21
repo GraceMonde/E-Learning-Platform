@@ -1,0 +1,101 @@
+:root {
+    --color-navbar-bg: #232f3e;
+    --color-navbar-link: #fff;
+    --color-navbar-link-hover: #ff9900;
+    --color-navbar-logo: #fff;
+    --color-navbar-logo-highlight: #ff9900;
+    --color-navbar-cta-border: #ff9900;
+  }
+  
+  .navbar {
+    background: var(--color-navbar-bg);
+    padding: 16px 0;
+    position: relative;
+    z-index: 100;
+  }
+  .navbar .logo {
+    color: var(--color-navbar-logo);
+    font-weight: bold;
+    font-size: 1.6rem;
+    letter-spacing: 1px;
+    text-decoration: none;
+  }
+  .navbar .logo span {
+    color: var(--color-navbar-logo-highlight);
+  }
+  
+  .navbar nav {
+    float: right;
+    display: flex;
+    align-items: center;
+    gap: 24px;
+    transition: opacity 0.2s, visibility 0.2s;
+  }
+  
+  .navbar nav a {
+    color: var(--color-navbar-link);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 4px 10px;
+    border-radius: 3px;
+    transition: color 0.2s, background 0.2s;
+  }
+  .navbar nav a:hover,
+  .navbar nav .cta {
+    color: var(--color-navbar-link-hover);
+  }
+  .navbar .cta {
+    font-weight: bold;
+    border: 1px solid var(--color-navbar-cta-border);
+    border-radius: 4px;
+    padding: 6px 16px;
+    margin-left: 18px;
+    background: transparent;
+  }
+  
+  /* Hamburger menu button (mobile) */
+  #menu-btn {
+    display: none;
+    background: none;
+    border: none;
+    color: var(--color-navbar-link);
+    font-size: 2rem;
+    cursor: pointer;
+    margin-left: 16px;
+    transition: color 0.2s;
+  }
+  #menu-btn.open {
+    color: var(--color-navbar-link-hover);
+  }
+  
+  @media (max-width: 800px) {
+    .navbar nav {
+      display: none;
+      flex-direction: column;
+      align-items: flex-end;
+      background: var(--color-navbar-bg);
+      position: absolute;
+      top: 60px;
+      right: 5%;
+      width: 180px;
+      padding: 20px 0;
+      border-radius: 9px;
+      box-shadow: 0 2px 12px #0003;
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+    }
+    .navbar nav.show {
+      display: flex;
+      opacity: 1;
+      visibility: visible;
+    }
+    #menu-btn {
+      display: block;
+      position: absolute;
+      right: 5%;
+      top: 17px;
+      z-index: 1001;
+    }
+  }
+  
