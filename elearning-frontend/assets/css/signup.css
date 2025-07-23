@@ -1,0 +1,128 @@
+/* basic reset */
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* page & form styles (unchanged) */
+body {
+  background: #f2f4f7;
+  font-family: Arial, sans-serif;
+  min-height: 100vh;
+}
+
+/* HEADER */
+.site-header {
+  display: flex;
+  justify-content: space-between; /* keeps title left, nav right */
+  align-items: center;
+  background: #362f2f;
+  padding: 0.75rem 1.5rem;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.nav-right button {
+  margin-left: 0.75rem;       /* space between each button */
+  padding: 0.5rem 0.75rem;
+  font-size: 0.9rem;
+  border: 1px solid #362f2f;
+  background: #362f2f;
+  border-radius: 4px;
+  cursor: pointer;
+  color: #ffffff;
+}
+
+.nav-right button:hover {
+  background: #221e1e;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: bold;
+  color: #fbf8f8;
+}
+
+/* center form under header */
+.signup-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem;
+}
+
+.signup-container form {
+  background: #ffffff;
+  padding: 2rem;
+  width: 100%;
+  max-width: 400px;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+
+/* headings */
+h2 {
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* form fields */
+.form-group {
+  margin-bottom: 1rem;
+}
+
+label {
+  display: block;
+  margin-bottom: 0.25rem;
+  color: #555;
+}
+
+input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccd0d5;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+input:focus {
+  border-color: #5b9df9;
+  outline: none;
+}
+
+.error {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875rem;
+  color: #d93025;
+  min-height: 1em;
+}
+
+/* submit button */
+button[type="submit"] {
+  width: 100%;
+  padding: 0.75rem;
+  background: #f9b45b;
+  color: #040101;
+  font-size: 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-top: 0.5rem;
+}
+
+button[type="submit"]:hover {
+  background: #e0834a;
+}
+
+/* success message */
+.success-message {
+  margin-top: 1rem;
+  text-align: center;
+  color: #137333;
+  font-weight: bold;
+}
