@@ -36,6 +36,23 @@ JWT_SECRET=d4a4f5dcf23b1d6dfc4b37f57d445fc2fb28a2ba55ac52dcc564777e108689b1
 
 PORT=5000
 
+## Project File Structure
+
+```
+backend/
+├── config/
+│   └── db.js              # MySQL connection setup
+├── routes/
+│   ├── user.js            # User registration and listing
+│   ├── auth.js            # Authentication (login)
+│   └── profile.js         # User profile (protected)
+├── E-LearningDB.sql.sql   # Database schema
+├── server.js              # Main Express server
+├── package.json           # Node.js dependencies
+├── package-lock.json      # Dependency lock file
+└── README.md              # Project documentation
+```
+
 ## Running the Server
 
 Start the development server with:
