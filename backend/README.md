@@ -61,3 +61,11 @@ npm run dev
 
 The server will start on `http://localhost:5000` (or the port you set in `.env`).
 
+## Profile Endpoints
+
+Authenticated users can manage their profile using the following routes:
+
+- `GET /api/profile` – retrieve the current user's profile information.
+- `PUT /api/profile` – update name and/or email of the current user.
+- `PUT /api/profile/password` – change the password after providing the current one.
+
