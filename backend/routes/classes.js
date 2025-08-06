@@ -38,6 +38,35 @@ async function generateInviteCode() {
   return code;
 }
 
+// Get classes for the logged-in user (as instructor or student)
+router.get('/', authenticateToken, async (req, res) => {
+  try {
+    const instructorClasses = await query(
+      'SELECT class_id, title, description, invite_code FROM classes WHERE instructor_id = ?',
+      [req.user.user_id]
+    );
+    const studentClasses = await query(
+      `SELECT c.class_id, c.title, c.description, c.invite_code
+       FROM classes c
+       JOIN enrollments e ON c.class_id = e.class_id
+       WHERE e.student_id = ? AND e.status = 'approved'`,
+      [req.user.user_id]
+    );
+
+    const allClasses = [...instructorClasses];
+    studentClasses.forEach(cls => {
+      if (!allClasses.some(c => c.class_id === cls.class_id)) {
+        allClasses.push(cls);
+      }
+    });
+
+    res.json(allClasses);
+  } catch (err) {
+    console.error('Fetch classes error:', err);
+    res.status(500).json({ message: 'Server error', error: err });
+  }
+});
+
 // Create a class
 router.post('/', authenticateToken, async (req, res) => {
   const { title, description } = req.body;
