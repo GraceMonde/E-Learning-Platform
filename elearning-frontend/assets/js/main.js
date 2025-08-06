@@ -14,7 +14,10 @@ document.addEventListener('DOMContentLoaded', async () => {
 
   const list = document.getElementById('classesList');
   try {
-    const res = await fetch('http://localhost:5000/api/classes', {
+    // Use a relative URL so the request works regardless of where the
+    // frontend is served from. An absolute localhost URL causes "Failed to
+    // fetch" errors when the backend runs on a different host or port.
+    const res = await fetch('/api/classes', {
       headers: {
         'Authorization': `Bearer ${token}`
       }
@@ -35,7 +38,10 @@ document.addEventListener('DOMContentLoaded', async () => {
     }
   } catch (err) {
     const li = document.createElement('li');
-    li.textContent = err.message;
+    // Provide a clearer message if the network request itself fails
+    li.textContent = err.message === 'Failed to fetch'
+      ? 'Unable to connect to the server.'
+      : err.message;
     list.appendChild(li);
   }
 
