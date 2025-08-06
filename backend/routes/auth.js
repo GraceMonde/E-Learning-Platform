@@ -21,7 +21,10 @@ router.post('/login', async (req, res) => {
       return res.status(400).json({ message: 'Email and password are required.' });
     }
 
-    const results = await query('SELECT * FROM users WHERE email = ?', [email]);
+    const results = await query(
+      'SELECT u.*, d.dashboard_id FROM users u LEFT JOIN dashboards d ON u.user_id = d.user_id WHERE u.email = ?',
+      [email]
+    );
     if (results.length === 0) {
       return res.status(401).json({ message: 'Invalid credentials.' });
     }
@@ -33,7 +36,7 @@ router.post('/login', async (req, res) => {
     }
 
     const token = jwt.sign(
-      { user_id: user.user_id, role: user.role },
+      { user_id: user.user_id },
       process.env.JWT_SECRET,
       { expiresIn: '1h' }
     );
@@ -44,7 +47,7 @@ router.post('/login', async (req, res) => {
         user_id: user.user_id,
         name: user.name,
         email: user.email,
-        role: user.role
+        dashboard_id: user.dashboard_id
       }
     });
   } catch (err) {
@@ -56,8 +59,8 @@ router.post('/login', async (req, res) => {
 // =================== REGISTER ===================
 router.post('/register', async (req, res) => {
   try {
-    const { name, email, password, role } = req.body;
-    if (!name || !email || !password || !role) {
+    const { name, email, password } = req.body;
+    if (!name || !email || !password) {
       return res.status(400).json({ message: 'All fields are required.' });
     }
 
@@ -71,10 +74,13 @@ router.post('/register', async (req, res) => {
     const password_hash = await bcrypt.hash(password, 10);
 
     // Insert new user
-    await query(
-      'INSERT INTO users (name, email, password_hash, role) VALUES (?, ?, ?, ?)',
-      [name, email, password_hash, role]
+    const result = await query(
+      'INSERT INTO users (name, email, password_hash) VALUES (?, ?, ?)',
+      [name, email, password_hash]
     );
+
+    // Create a dashboard for this user
+    await query('INSERT INTO dashboards (user_id) VALUES (?)', [result.insertId]);
 
     res.status(201).json({ message: 'Registration successful! You can now log in.' });
   } catch (err) {
