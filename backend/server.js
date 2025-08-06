@@ -9,6 +9,7 @@ const path = require('path'); // <-- ADD THIS LINE
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
+const classRoutes = require('./routes/classes');
 
 const app = express();
 app.use(cors());
@@ -26,6 +27,7 @@ app.get('/', (req, res) => {
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/classes', classRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
