@@ -18,11 +18,36 @@
     <main class="nav-main">
         <h2>Choose an Option</h2>
         <div class="button-container">
-            <button class="nav-btn">Join Class</button>
-            <button class="nav-btn">Create Class</button>
+            <button class="nav-btn" id="openJoin">Join Class</button>
+            <button class="nav-btn" id="openCreate">Create Class</button>
         </div>
     </main>
 
-    <script src="js/main.js"></script>
+    <!-- Join Class Modal -->
+    <div id="joinModal" class="modal">
+        <div class="modal-content">
+            <span class="close" data-close="joinModal">&times;</span>
+            <h3>Join Class</h3>
+            <form id="joinForm">
+                <input type="text" id="classCode" placeholder="Class code" required>
+                <button type="submit">Join</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Class Modal -->
+    <div id="createModal" class="modal">
+        <div class="modal-content">
+            <span class="close" data-close="createModal">&times;</span>
+            <h3>Create Class</h3>
+            <form id="createForm">
+                <input type="text" id="classTitle" placeholder="Title" required>
+                <textarea id="classDescription" placeholder="Description" required></textarea>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/js/navigation.js"></script>
 </body>
 </html>
