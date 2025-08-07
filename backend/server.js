@@ -14,7 +14,9 @@ const materialRoutes = require('./routes/materials');
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+// Increase payload limits to allow larger file uploads encoded in JSON
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../elearning-frontend')));
