@@ -1,7 +1,7 @@
 @import url('style.css'); /* uses shared styles from your platform */
 
 body {
-  background: #f4f7fa;
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
   margin: 0;
   padding: 0;
   font-family: 'Segoe UI', sans-serif;
@@ -19,14 +19,23 @@ body {
   padding: 20px;
 }
 
+
 .form-card {
-  background: #fff;
+  background: rgba(255, 255, 255, 0.95);
   padding: 40px 30px;
   border-radius: 12px;
   box-shadow: 0 4px 32px rgba(0, 0, 0, 0.08);
   width: 100%;
   max-width: 420px;
   text-align: center;
+  animation: floatIn 0.6s ease;
+}
+
+.brand-logo {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #ff9900;
+  margin-bottom: 12px;
 }
 
 .form-card h2 {
@@ -81,6 +90,11 @@ button#login-btn {
   position: relative;
 }
 
+button#login-btn:hover {
+  background-color: #d97706;
+  color: #fff;
+}
+
 button#login-btn.loading {
   background-color: #f59e0b;
   color: #fff;
@@ -106,6 +120,11 @@ button#login-btn.success {
 
 @keyframes spin {
   to { transform: rotate(360deg); }
+}
+
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
 .error-message {
