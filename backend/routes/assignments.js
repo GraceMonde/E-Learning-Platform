@@ -12,6 +12,12 @@ if (!fs.existsSync(submissionDir)) {
   fs.mkdirSync(submissionDir, { recursive: true });
 }
 
+// Directory for assignment resources
+const resourceDir = path.join(__dirname, '../uploads/assignments');
+if (!fs.existsSync(resourceDir)) {
+  fs.mkdirSync(resourceDir, { recursive: true });
+}
+
 // Utility helper to use async/await with db queries
 function query(sql, params) {
   return new Promise((resolve, reject) => {
@@ -54,7 +60,7 @@ router.get('/class/:classId', authenticateToken, async (req, res) => {
     }
 
     const assignments = await query(
-      `SELECT a.assignment_id, a.title, a.description, a.due_date,
+      `SELECT a.assignment_id, a.title, a.description, a.due_date, a.resource_url,
               s.submission_id, g.score, g.feedback
          FROM assignments a
          LEFT JOIN submissions s ON a.assignment_id = s.assignment_id AND s.student_id = ?
@@ -73,7 +79,7 @@ router.get('/class/:classId', authenticateToken, async (req, res) => {
 // Create assignment
 router.post('/class/:classId', authenticateToken, async (req, res) => {
   const { classId } = req.params;
-  const { title, description, due_date } = req.body;
+  const { title, description, due_date, resourceName, resourceData } = req.body;
   if (!title) {
     return res.status(400).json({ message: 'Title is required.' });
   }
@@ -82,11 +88,22 @@ router.post('/class/:classId', authenticateToken, async (req, res) => {
     if (classes.length === 0 || classes[0].instructor_id !== req.user.user_id) {
       return res.status(403).json({ message: 'Not authorized to create assignment for this class.' });
     }
+    let resourceUrl = null;
+    if (resourceName && resourceData) {
+      const buffer = Buffer.from(resourceData, 'base64');
+      const classDir = path.join(resourceDir, String(classId));
+      if (!fs.existsSync(classDir)) {
+        fs.mkdirSync(classDir, { recursive: true });
+      }
+      const storedName = `${Date.now()}-${resourceName}`;
+      fs.writeFileSync(path.join(classDir, storedName), buffer);
+      resourceUrl = `/uploads/assignments/${classId}/${storedName}`;
+    }
     const result = await query(
-      'INSERT INTO assignments (class_id, title, description, due_date) VALUES (?, ?, ?, ?)',
-      [classId, title, description, due_date]
+      'INSERT INTO assignments (class_id, title, description, due_date, resource_url) VALUES (?, ?, ?, ?, ?)',
+      [classId, title, description, due_date, resourceUrl]
     );
-    res.status(201).json({ assignment_id: result.insertId });
+    res.status(201).json({ assignment_id: result.insertId, resource_url: resourceUrl });
   } catch (err) {
     console.error('Create assignment error:', err);
     res.status(500).json({ message: 'Server error', error: err });
@@ -96,10 +113,10 @@ router.post('/class/:classId', authenticateToken, async (req, res) => {
 // Edit assignment details
 router.put('/:assignmentId', authenticateToken, async (req, res) => {
   const { assignmentId } = req.params;
-  const { title, description, due_date } = req.body;
+  const { title, description, due_date, resourceName, resourceData } = req.body;
   try {
     const rows = await query(
-      `SELECT a.assignment_id, c.instructor_id
+      `SELECT a.assignment_id, a.class_id, a.resource_url, c.instructor_id
          FROM assignments a
          JOIN classes c ON a.class_id = c.class_id
         WHERE a.assignment_id = ?`,
@@ -113,6 +130,24 @@ router.put('/:assignmentId', authenticateToken, async (req, res) => {
     if (title) { fields.push('title = ?'); params.push(title); }
     if (description) { fields.push('description = ?'); params.push(description); }
     if (due_date) { fields.push('due_date = ?'); params.push(due_date); }
+    if (resourceName && resourceData) {
+      const buffer = Buffer.from(resourceData, 'base64');
+      const classDir = path.join(resourceDir, String(rows[0].class_id));
+      if (!fs.existsSync(classDir)) {
+        fs.mkdirSync(classDir, { recursive: true });
+      }
+      const storedName = `${Date.now()}-${resourceName}`;
+      fs.writeFileSync(path.join(classDir, storedName), buffer);
+      const resourceUrl = `/uploads/assignments/${rows[0].class_id}/${storedName}`;
+      fields.push('resource_url = ?');
+      params.push(resourceUrl);
+      if (rows[0].resource_url) {
+        const oldPath = path.join(__dirname, '..', rows[0].resource_url);
+        if (fs.existsSync(oldPath)) {
+          fs.unlinkSync(oldPath);
+        }
+      }
+    }
     if (fields.length === 0) {
       return res.status(400).json({ message: 'No update fields provided.' });
     }
@@ -133,19 +168,39 @@ router.post('/:assignmentId/submit', authenticateToken, async (req, res) => {
     return res.status(400).json({ message: 'File is required.' });
   }
   try {
-    const check = await query('SELECT assignment_id FROM assignments WHERE assignment_id = ?', [assignmentId]);
-    if (check.length === 0) {
+    const rows = await query('SELECT class_id, due_date FROM assignments WHERE assignment_id = ?', [assignmentId]);
+    if (rows.length === 0) {
       return res.status(404).json({ message: 'Assignment not found.' });
     }
+    const { class_id, due_date } = rows[0];
+    if (due_date && new Date() > new Date(due_date)) {
+      return res.status(400).json({ message: 'Deadline has passed.' });
+    }
     const buffer = Buffer.from(fileData, 'base64');
-    const userDir = path.join(submissionDir, String(req.user.user_id));
+    const userDir = path.join(submissionDir, String(class_id), String(req.user.user_id));
     if (!fs.existsSync(userDir)) {
       fs.mkdirSync(userDir, { recursive: true });
     }
     const storedName = `${Date.now()}-${fileName}`;
     const filePath = path.join(userDir, storedName);
     fs.writeFileSync(filePath, buffer);
-    const fileUrl = `/uploads/submissions/${req.user.user_id}/${storedName}`;
+    const fileUrl = `/uploads/submissions/${class_id}/${req.user.user_id}/${storedName}`;
+    const existing = await query(
+      'SELECT submission_id, file_url FROM submissions WHERE assignment_id = ? AND student_id = ?',
+      [assignmentId, req.user.user_id]
+    );
+    if (existing.length > 0) {
+      const oldPath = path.join(__dirname, '..', existing[0].file_url);
+      if (fs.existsSync(oldPath)) {
+        fs.unlinkSync(oldPath);
+      }
+      await query(
+        'UPDATE submissions SET file_url = ?, submitted_at = NOW() WHERE submission_id = ?',
+        [fileUrl, existing[0].submission_id]
+      );
+      await query('DELETE FROM grades WHERE submission_id = ?', [existing[0].submission_id]);
+      return res.json({ submission_id: existing[0].submission_id, file_url: fileUrl });
+    }
     const result = await query(
       'INSERT INTO submissions (assignment_id, student_id, file_url) VALUES (?, ?, ?)',
       [assignmentId, req.user.user_id, fileUrl]
@@ -232,7 +287,7 @@ router.get('/class/:classId/grades', authenticateToken, async (req, res) => {
   const { classId } = req.params;
   try {
     const grades = await query(
-      `SELECT a.assignment_id, a.title, g.score, g.feedback
+      `SELECT a.assignment_id, a.title, a.resource_url, g.score, g.feedback
          FROM assignments a
          LEFT JOIN submissions s ON a.assignment_id = s.assignment_id AND s.student_id = ?
          LEFT JOIN grades g ON s.submission_id = g.submission_id

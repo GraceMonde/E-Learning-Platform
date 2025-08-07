@@ -59,6 +59,7 @@ CREATE TABLE assignments (
   title VARCHAR(255),
   description TEXT,
   due_date DATE,
+  resource_url TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (class_id) REFERENCES classes(class_id) ON DELETE CASCADE
 );
@@ -165,8 +166,8 @@ INSERT INTO materials (class_id, title, file_url, folder, tags, uploaded_by) VAL
 (1, 'Week 1 Slides', 'materials/week1.pdf', 'Week 1', 'intro,web', 2);
 
 -- SAMPLE ASSIGNMENT
-INSERT INTO assignments (class_id, title, description, due_date) VALUES
-(1, 'HTML Basics', 'Create a static webpage.', '2025-07-31');
+INSERT INTO assignments (class_id, title, description, due_date, resource_url) VALUES
+(1, 'HTML Basics', 'Create a static webpage.', '2025-07-31', NULL);
 
 -- SAMPLE SUBMISSION
 INSERT INTO submissions (assignment_id, student_id, file_url) VALUES
