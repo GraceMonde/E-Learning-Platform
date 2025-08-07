@@ -8,6 +8,7 @@ document.addEventListener('DOMContentLoaded', () => {
   let courses = [];
   let currentClassIsInstructor = false;
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
+  const token = localStorage.getItem('userToken');
 
   async function loadCourses() {
     const token = localStorage.getItem('userToken');
@@ -175,4 +176,22 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   loadCourses();
+
+  const logout = document.getElementById('logout');
+  if (logout) {
+    logout.addEventListener('click', async (e) => {
+      e.preventDefault();
+      try {
+        await fetch('http://localhost:5000/api/auth/logout', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+      } catch (_) {
+        // ignore errors
+      }
+      localStorage.removeItem('userToken');
+      localStorage.removeItem('userInfo');
+      window.location.href = 'login.html';
+    });
+  }
 });
