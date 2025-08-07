@@ -1,4 +1,4 @@
-document.getElementById('signupForm').addEventListener('submit', function(e) {
+document.getElementById('signupForm').addEventListener('submit', async function(e) {
   e.preventDefault(); // stop form from submitting
 
   // grab form fields
@@ -52,11 +52,29 @@ document.getElementById('signupForm').addEventListener('submit', function(e) {
     isValid = false;
   }
 
-  // If everything is valid, show message then redirect after 4s
+  // If everything is valid, submit to backend then redirect
   if (isValid) {
-    successMessage.textContent = 'Account created! Redirecting to login…';
-    setTimeout(() => {
-      window.location.href = 'login.html';
-    }, 4000); // 4000ms = 4 seconds
+    try {
+      const response = await fetch('http://localhost:5000/api/auth/register', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: username.value.trim(),
+          email: email.value.trim(),
+          password: pwd
+        })
+      });
+      const data = await response.json();
+      if (!response.ok) {
+        throw new Error(data.message || 'Registration failed. Please try again.');
+      }
+      successMessage.textContent = data.message || 'Account created! Redirecting to login…';
+      setTimeout(() => {
+        window.location.href = 'login.html';
+      }, 4000);
+    } catch (err) {
+      emailError.textContent = err.message;
+    }
   }
 });
+

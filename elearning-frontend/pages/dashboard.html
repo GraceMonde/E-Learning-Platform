@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>E-Learning Dashboard</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="../assets/css/dashboard.css">
 
 </head>
@@ -12,6 +16,7 @@
         <div class="logo">eLearnHub</div>
         <nav>
             <a href="navigation.html">Navigation</a>
+            <a href="profile.html">Profile</a>
             <a href="#" id="logout">Logout</a>
         </nav>
     </header>
@@ -20,12 +25,32 @@
         <h2 id="welcomeMessage">Welcome, Student!</h2>
 
         <div class="dashboard-grid">
-            <div class="card">My Classes</div>
-            <div class="card">Announcements</div>
-            <div class="card">Upcoming tasks and deadlines</div>
+            <div class="card">
+                <h3><i class="fas fa-chalkboard-teacher"></i> My Classes</h3>
+                <div id="classesContainer" class="classes-container"></div>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-bullhorn"></i> Announcements</h3>
+                <div id="announcementsContainer" class="info-list"></div>
+            </div>
+            <div class="card">
+                <h3><i class="fas fa-calendar-alt"></i> Upcoming tasks and deadlines</h3>
+                <div id="tasksContainer" class="info-list"></div>
+            </div>
         </div>
     </main>
 
-    <script src="js/main.js"></script>
+    <!-- Modal for editing class -->
+    <div id="classModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Edit Class</h3>
+            <input type="text" id="modalTitle" placeholder="Class Title">
+            <textarea id="modalDescription" placeholder="Class Description"></textarea>
+            <button id="modalSave">Save</button>
+        </div>
+    </div>
+
+    <script src="../assets/js/main.js"></script>
 </body>
 </html>

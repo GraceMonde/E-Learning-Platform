@@ -1,51 +1,18 @@
+@import url('style.css');
+
 * {
   box-sizing: border-box;
   margin: 0;
   padding: 0;
 }
 
-/* page & form styles (unchanged) */
 body {
-  background: #f2f4f7;
-  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
+  font-family: 'Segoe UI', sans-serif;
   min-height: 100vh;
 }
 
-/* HEADER */
-.site-header {
-  display: flex;
-  justify-content: space-between; /* keeps title left, nav right */
-  align-items: center;
-  background: #362f2f;
-  padding: 0.75rem 1.5rem;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.05);
-  position: sticky;
-  top: 0;
-  z-index: 100;
-}
-
-.nav-right button {
-  margin-left: 0.75rem;       /* space between each button */
-  padding: 0.5rem 0.75rem;
-  font-size: 0.9rem;
-  border: 1px solid #362f2f;
-  background: #362f2f;
-  border-radius: 4px;
-  cursor: pointer;
-  color: #ffffff;
-}
-
-.nav-right button:hover {
-  background: #221e1e;
-}
-
-.app-title {
-  font-size: 1.25rem;
-  font-weight: bold;
-  color: #fbf8f8;
-}
-
-/* center form under header */
+/* center form */
 .signup-container {
   display: flex;
   align-items: center;
@@ -53,20 +20,21 @@ body {
   padding: 2rem 1rem;
 }
 
-.signup-container form {
-  background: #ffffff;
+.form-card {
+  background: rgba(255, 255, 255, 0.95);
   padding: 2rem;
   width: 100%;
   max-width: 400px;
   border-radius: 8px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  box-shadow: 0 4px 32px rgba(0,0,0,0.08);
+  animation: floatIn 0.6s ease;
 }
 
 /* headings */
 h2 {
   text-align: center;
   margin-bottom: 1.5rem;
-  color: #333;
+  color: #232f3e;
 }
 
 /* form fields */
@@ -83,13 +51,13 @@ label {
 input {
   width: 100%;
   padding: 0.5rem;
-  border: 1px solid #ccd0d5;
+  border: 1px solid #dcdfe6;
   border-radius: 4px;
   font-size: 1rem;
 }
 
 input:focus {
-  border-color: #5b9df9;
+  border-color: #ff9900;
   outline: none;
 }
 
@@ -105,17 +73,19 @@ input:focus {
 button[type="submit"] {
   width: 100%;
   padding: 0.75rem;
-  background: #f9b45b;
-  color: #040101;
+  background: #ff9900;
+  color: #232f3e;
   font-size: 1rem;
   border: none;
-  border-radius: 4px;
+  border-radius: 6px;
   cursor: pointer;
   margin-top: 0.5rem;
+  transition: background 0.2s, color 0.2s;
 }
 
 button[type="submit"]:hover {
-  background: #e0834a;
+  background: #d97706;
+  color: #fff;
 }
 
 /* success message */
@@ -124,4 +94,24 @@ button[type="submit"]:hover {
   text-align: center;
   color: #137333;
   font-weight: bold;
+}
+
+.login-link {
+  margin-top: 24px;
+  font-size: 0.95rem;
+  text-align: center;
+}
+
+.login-link a {
+  color: #ff9900;
+  text-decoration: none;
+}
+
+.login-link a:hover {
+  text-decoration: underline;
+}
+
+@keyframes floatIn {
+  from { opacity: 0; transform: translateY(15px); }
+  to { opacity: 1; transform: translateY(0); }
 }

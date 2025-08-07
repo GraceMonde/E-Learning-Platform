@@ -9,13 +9,24 @@ const path = require('path'); // <-- ADD THIS LINE
 const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
+const classRoutes = require('./routes/classes');
+const materialRoutes = require('./routes/materials');
+const assignmentRoutes = require('./routes/assignments');
+const announcementRoutes = require('./routes/announcements');
+const threadRoutes = require('./routes/threads');
+const notificationRoutes = require('./routes/notifications');
+const lectureRoutes = require('./routes/lectures');
+const analyticsRoutes = require('./routes/analytics');
 
 const app = express();
 app.use(cors());
-app.use(express.json());
+// Increase payload limits to allow larger file uploads encoded in JSON
+app.use(express.json({ limit: '50mb' }));
+app.use(express.urlencoded({ extended: true, limit: '50mb' }));
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../elearning-frontend')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Serve the welcome page for "/"
 app.get('/', (req, res) => {
@@ -26,6 +37,14 @@ app.get('/', (req, res) => {
 app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
+app.use('/api/classes', classRoutes);
+app.use('/api/materials', materialRoutes);
+app.use('/api/assignments', assignmentRoutes);
+app.use('/api/announcements', announcementRoutes);
+app.use('/api/threads', threadRoutes);
+app.use('/api/notifications', notificationRoutes);
+app.use('/api/lectures', lectureRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

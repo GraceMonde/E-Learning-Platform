@@ -5,8 +5,15 @@ CREATE TABLE users (
   name VARCHAR(100) NOT NULL,
   email VARCHAR(100) UNIQUE NOT NULL,
   password_hash TEXT NOT NULL,
-  role ENUM('student', 'instructor') NOT NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
+
+-- DASHBOARDS TABLE
+CREATE TABLE dashboards (
+  dashboard_id INT AUTO_INCREMENT PRIMARY KEY,
+  user_id INT UNIQUE,
+  created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(user_id) ON DELETE CASCADE
 );
 
 -- CLASSES TABLE
@@ -37,6 +44,7 @@ CREATE TABLE materials (
   class_id INT,
   title VARCHAR(255),
   file_url TEXT,
+  folder VARCHAR(255),
   tags TEXT,
   uploaded_by INT,
   uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -51,6 +59,7 @@ CREATE TABLE assignments (
   title VARCHAR(255),
   description TEXT,
   due_date DATE,
+  resource_url TEXT,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   FOREIGN KEY (class_id) REFERENCES classes(class_id) ON DELETE CASCADE
 );
@@ -136,10 +145,13 @@ CREATE TABLE live_lectures (
 );
 
 -- SAMPLE USERS
-INSERT INTO users (name, email, password_hash, role) VALUES
-('Musengwa Himoonga', 'musengwa@example.com', 'hashed_pw123', 'student'),
-('Grace Banda', 'grace@example.com', 'hashed_pw456', 'instructor'),
-('Webster Mwansa', 'webster@example.com', 'hashed_pw789', 'instructor');
+INSERT INTO users (name, email, password_hash) VALUES
+('Musengwa Himoonga', 'musengwa@example.com', 'hashed_pw123'),
+('Grace Banda', 'grace@example.com', 'hashed_pw456'),
+('Webster Mwansa', 'webster@example.com', 'hashed_pw789');
+
+-- SAMPLE DASHBOARDS
+INSERT INTO dashboards (user_id) VALUES (1), (2), (3);
 
 -- SAMPLE CLASS
 INSERT INTO classes (title, description, invite_code, instructor_id) VALUES
@@ -150,12 +162,12 @@ INSERT INTO enrollments (class_id, student_id, status) VALUES
 (1, 1, 'approved');
 
 -- SAMPLE MATERIAL
-INSERT INTO materials (class_id, title, file_url, tags, uploaded_by) VALUES
-(1, 'Week 1 Slides', 'materials/week1.pdf', 'intro,web', 2);
+INSERT INTO materials (class_id, title, file_url, folder, tags, uploaded_by) VALUES
+(1, 'Week 1 Slides', 'materials/week1.pdf', 'Week 1', 'intro,web', 2);
 
 -- SAMPLE ASSIGNMENT
-INSERT INTO assignments (class_id, title, description, due_date) VALUES
-(1, 'HTML Basics', 'Create a static webpage.', '2025-07-31');
+INSERT INTO assignments (class_id, title, description, due_date, resource_url) VALUES
+(1, 'HTML Basics', 'Create a static webpage.', '2025-07-31', NULL);
 
 -- SAMPLE SUBMISSION
 INSERT INTO submissions (assignment_id, student_id, file_url) VALUES

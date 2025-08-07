@@ -1,0 +1,152 @@
+/* Materials page styling */
+.materials-hero {
+  background: linear-gradient(135deg, #1f2937, #0f172a);
+  color: #f8fafc;
+  text-align: center;
+  padding: 60px 20px;
+}
+
+.materials-hero h1 {
+  font-size: 2.5rem;
+  color: #f59e0b;
+  margin-bottom: 10px;
+}
+
+.materials-hero p {
+  font-size: 1.1rem;
+  color: #e5e7eb;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hero-content {
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.upload-section,
+.materials-list {
+  background: #ffffff;
+  max-width: 900px;
+  margin: 25px auto;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.course-selector {
+  background: #ffffff;
+  max-width: 900px;
+  margin: 25px auto;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
+.course-selector label {
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.course-selector select {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+.upload-section h3,
+.materials-list h3 {
+  font-size: 1.4rem;
+  color: #1f2937;
+  margin-bottom: 15px;
+}
+
+#uploadForm input[type="text"],
+#uploadForm input[type="file"] {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 12px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
+#uploadForm {
+  display: grid;
+  gap: 12px;
+}
+
+#uploadForm button {
+  background-color: #f59e0b;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1rem;
+  font-weight: 600;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+#uploadForm button:hover {
+  background-color: #d97706;
+}
+
+.folder-section {
+  margin-top: 25px;
+}
+.folder-section h4 {
+  font-size: 1.3rem;
+  color: #0f172a;
+  margin-bottom: 10px;
+  border-bottom: 2px solid #f59e0b;
+  padding-bottom: 5px;
+}
+
+.material-card {
+  display: flex;
+  flex-direction: column;
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 6px;
+  padding: 15px;
+  margin-bottom: 12px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
+}
+.material-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 8px;
+}
+.tag {
+  display: inline-block;
+  background-color: #0ea5e9;
+  color: white;
+  padding: 2px 8px;
+  border-radius: 4px;
+  font-size: 0.75rem;
+  margin-right: 5px;
+}
+.download-link {
+  color: #2563eb;
+  text-decoration: none;
+  font-size: 0.9rem;
+  margin-top: 8px;
+}
+.download-link:hover {
+  text-decoration: underline;
+}
+.card-actions {
+  margin-top: 10px;
+}
+.card-actions button {
+  margin-right: 8px;
+  font-size: 0.85rem;
+  padding: 6px 12px;
+}
+
+.material-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
+}

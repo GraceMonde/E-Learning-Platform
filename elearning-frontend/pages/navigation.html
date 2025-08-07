@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Navigation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="../assets/css/dashboard.css">
 </head>
 <body>
@@ -11,18 +15,66 @@
         <div class="logo">eLearnHub</div>
         <nav>
             <a href="dashboard.html">Dashboard</a>
+            <a href="profile.html">Profile</a>
             <a href="#" id="logout">Logout</a>
         </nav>
     </header>
 
     <main class="nav-main">
         <h2>Choose an Option</h2>
-        <div class="button-container">
-            <button class="nav-btn">Join Class</button>
-            <button class="nav-btn">Create Class</button>
+        <div class="nav-grid">
+            <div class="nav-card" id="openJoin">
+                <i class="fas fa-user-plus"></i>
+                <h3>Join Class</h3>
+            </div>
+            <div class="nav-card" id="openCreate">
+                <i class="fas fa-plus-circle"></i>
+                <h3>Create Class</h3>
+            </div>
+            <div class="nav-card" id="openMaterials">
+                <i class="fas fa-book-open"></i>
+                <h3>Course Materials</h3>
+            </div>
+            <div class="nav-card" id="openAssignments">
+                <i class="fas fa-tasks"></i>
+                <h3>Assignments</h3>
+            </div>
+            <div class="nav-card" id="openCommunication">
+                <i class="fas fa-comments"></i>
+                <h3>Communication</h3>
+            </div>
+            <div class="nav-card" id="openLive">
+                <i class="fas fa-video"></i>
+                <h3>Live Lectures</h3>
+            </div>
         </div>
     </main>
 
-    <script src="js/main.js"></script>
+    <!-- Join Class Modal -->
+    <div id="joinModal" class="modal">
+        <div class="modal-content">
+            <span class="close" data-close="joinModal">&times;</span>
+            <h3>Join Class</h3>
+            <form id="joinForm">
+                <input type="text" id="classCode" placeholder="Class code" required>
+                <button type="submit">Join</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Create Class Modal -->
+    <div id="createModal" class="modal">
+        <div class="modal-content">
+            <span class="close" data-close="createModal">&times;</span>
+            <h3>Create Class</h3>
+            <form id="createForm">
+                <input type="text" id="classTitle" placeholder="Title" required>
+                <textarea id="classDescription" placeholder="Description" required></textarea>
+                <button type="submit">Create</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../assets/js/navigation.js"></script>
 </body>
 </html>

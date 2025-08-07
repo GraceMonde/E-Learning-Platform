@@ -1,0 +1,31 @@
+/* Styles specific to the live lectures page */
+
+.live-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 30px;
+    margin-top: 30px;
+}
+
+.live-grid .live-form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.live-grid input {
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+.analytics-output {
+    background: #f9fafb;
+    padding: 15px;
+    border-radius: 5px;
+    border: 1px solid #e5e7eb;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
