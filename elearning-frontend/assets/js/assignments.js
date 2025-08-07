@@ -57,18 +57,37 @@ document.addEventListener('DOMContentLoaded', () => {
   function renderAssignment(a) {
     const card = document.createElement('div');
     card.className = 'assignment-card';
-    card.innerHTML = `
-      <h4>${a.title}</h4>
-      <p>${a.description || ''}</p>
-      <p class="due">Due: ${a.due_date || 'N/A'}</p>
-    `;
+
+    const titleEl = document.createElement('h4');
+    titleEl.textContent = a.title;
+    card.appendChild(titleEl);
+
+    const descEl = document.createElement('p');
+    descEl.className = 'description';
+    descEl.textContent = a.description || '';
+    card.appendChild(descEl);
+
+    const dueEl = document.createElement('p');
+    dueEl.className = 'due';
+    dueEl.textContent = `Due: ${a.due_date || 'N/A'}`;
+    card.appendChild(dueEl);
+
+    if (!isInstructor && a.score !== null) {
+      const grade = document.createElement('p');
+      grade.className = 'grade';
+      grade.textContent = `Score: ${a.score}${a.feedback ? ' - ' + a.feedback : ''}`;
+      card.appendChild(grade);
+    }
+
+    const actions = document.createElement('div');
+    actions.className = 'assignment-actions';
 
     if (a.resource_url) {
       const resLink = document.createElement('a');
       resLink.href = a.resource_url;
       resLink.textContent = 'Resource';
       resLink.target = '_blank';
-      card.appendChild(resLink);
+      actions.appendChild(resLink);
     }
 
     const now = new Date();
@@ -81,15 +100,9 @@ document.addEventListener('DOMContentLoaded', () => {
       const subsBtn = document.createElement('button');
       subsBtn.textContent = 'Submissions';
       subsBtn.addEventListener('click', () => toggleSubmissions(a.assignment_id, card));
-      card.appendChild(editBtn);
-      card.appendChild(subsBtn);
+      actions.appendChild(editBtn);
+      actions.appendChild(subsBtn);
     } else {
-      if (a.score !== null) {
-        const grade = document.createElement('p');
-        grade.className = 'grade';
-        grade.textContent = `Score: ${a.score}${a.feedback ? ' - ' + a.feedback : ''}`;
-        card.appendChild(grade);
-      }
       if (!due || due >= now) {
         const submitBtn = document.createElement('button');
         submitBtn.textContent = a.submission_id ? 'Resubmit' : 'Submit';
@@ -97,14 +110,19 @@ document.addEventListener('DOMContentLoaded', () => {
           currentAssignment = a.assignment_id;
           submitModal.classList.add('active');
         });
-        card.appendChild(submitBtn);
+        actions.appendChild(submitBtn);
       } else {
         const closed = document.createElement('p');
         closed.className = 'closed';
         closed.textContent = 'Submission closed';
-        card.appendChild(closed);
+        actions.appendChild(closed);
       }
     }
+
+    if (actions.children.length > 0) {
+      card.appendChild(actions);
+    }
+
     assignmentList.appendChild(card);
   }
 

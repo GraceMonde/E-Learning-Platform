@@ -56,6 +56,14 @@
     color: #4b5563;
 }
 
+.assignment-card .description {
+    white-space: pre-wrap;
+    word-break: break-word;
+    max-height: 150px;
+    overflow-y: auto;
+    margin-bottom: 8px;
+}
+
 .assignment-card .due {
     font-size: 0.9rem;
     color: #6b7280;
@@ -63,6 +71,23 @@
 
 .assignment-card button {
     margin-top: 10px;
+}
+
+.assignment-actions {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 10px;
+    margin-top: 10px;
+}
+
+.assignment-actions button {
+    margin-top: 0;
+}
+
+.assignment-actions a {
+    color: #2563eb;
+    text-decoration: none;
 }
 
 .submissions {

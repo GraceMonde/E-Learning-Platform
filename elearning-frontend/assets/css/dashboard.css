@@ -72,6 +72,19 @@ h2 {
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
 }
 
+.info-list {
+    text-align: left;
+    font-weight: normal;
+    margin-top: 10px;
+    max-height: 200px;
+    overflow-y: auto;
+}
+
+.info-list p {
+    margin: 4px 0;
+    line-height: 1.4;
+}
+
 /* Buttons (shared for navigation and other pages) */
 button {
     padding: 12px 24px;
