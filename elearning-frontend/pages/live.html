@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Live Lectures</title>
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">eLearnHub</div>
+        <nav>
+            <a href="navigation.html">Navigation</a>
+            <a href="#" id="logout">Logout</a>
+        </nav>
+    </header>
+    <main>
+        <h2>Live Lectures</h2>
+        <section>
+            <h3>Schedule Lecture</h3>
+            <form id="scheduleForm">
+                <input type="text" id="lectureTitle" placeholder="Title" required>
+                <input type="datetime-local" id="lectureTime" required>
+                <button type="submit">Schedule</button>
+            </form>
+        </section>
+        <section>
+            <h3>Join Lecture</h3>
+            <form id="joinForm">
+                <input type="number" id="lectureId" placeholder="Lecture ID" required>
+                <button type="submit">Join</button>
+            </form>
+        </section>
+        <section>
+            <h3>Share Screen</h3>
+            <form id="shareForm">
+                <input type="number" id="shareLectureId" placeholder="Lecture ID" required>
+                <button type="submit">Share Screen</button>
+            </form>
+        </section>
+        <section>
+            <h3>Analytics</h3>
+            <button id="refreshAnalytics">Refresh</button>
+            <pre id="analyticsOutput"></pre>
+        </section>
+    </main>
+    <script src="../assets/js/live.js"></script>
+</body>
+</html>
