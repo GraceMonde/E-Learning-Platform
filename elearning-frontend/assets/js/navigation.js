@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const createBtn = document.getElementById('openCreate');
   const materialsBtn = document.getElementById('openMaterials');
   const assignmentsBtn = document.getElementById('openAssignments');
+  const communicationBtn = document.getElementById('openCommunication');
   const joinModal = document.getElementById('joinModal');
   const createModal = document.getElementById('createModal');
   const closeButtons = document.querySelectorAll('.close');
@@ -17,6 +18,9 @@ document.addEventListener('DOMContentLoaded', () => {
   });
   assignmentsBtn.addEventListener('click', () => {
     window.location.href = 'assignments.html';
+  });
+  communicationBtn.addEventListener('click', () => {
+    window.location.href = 'communication.html';
   });
 
   // Close modals

@@ -12,6 +12,9 @@ const profileRoutes = require('./routes/profile');
 const classRoutes = require('./routes/classes');
 const materialRoutes = require('./routes/materials');
 const assignmentRoutes = require('./routes/assignments');
+const announcementRoutes = require('./routes/announcements');
+const threadRoutes = require('./routes/threads');
+const notificationRoutes = require('./routes/notifications');
 
 const app = express();
 app.use(cors());
@@ -35,6 +38,9 @@ app.use('/api/profile', profileRoutes);
 app.use('/api/classes', classRoutes);
 app.use('/api/materials', materialRoutes);
 app.use('/api/assignments', assignmentRoutes);
+app.use('/api/announcements', announcementRoutes);
+app.use('/api/threads', threadRoutes);
+app.use('/api/notifications', notificationRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
