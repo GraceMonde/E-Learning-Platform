@@ -11,44 +11,46 @@
     <link rel="stylesheet" href="../assets/css/dashboard.css">
 </head>
 <body>
-    <header class="header">
-        <div class="logo">eLearnHub</div>
-        <nav>
-            <a href="dashboard.html">Dashboard</a>
-            <a href="profile.html">Profile</a>
-            <a href="#" id="logout">Logout</a>
-        </nav>
-    </header>
-
-    <main class="nav-main">
-        <h2>Choose an Option</h2>
-        <div class="nav-grid">
-            <div class="nav-card" id="openJoin">
-                <i class="fas fa-user-plus"></i>
-                <h3>Join Class</h3>
-            </div>
-            <div class="nav-card" id="openCreate">
-                <i class="fas fa-plus-circle"></i>
-                <h3>Create Class</h3>
-            </div>
-            <div class="nav-card" id="openMaterials">
-                <i class="fas fa-book-open"></i>
-                <h3>Course Materials</h3>
-            </div>
-            <div class="nav-card" id="openAssignments">
-                <i class="fas fa-tasks"></i>
-                <h3>Assignments</h3>
-            </div>
-            <div class="nav-card" id="openCommunication">
-                <i class="fas fa-comments"></i>
-                <h3>Communication</h3>
-            </div>
-            <div class="nav-card" id="openLive">
-                <i class="fas fa-video"></i>
-                <h3>Live Lectures</h3>
-            </div>
+    <div class="layout">
+        <aside id="sidebar" class="sidebar"></aside>
+        <div class="main">
+            <header class="header">
+                <div class="page-title">Navigation</div>
+                <div class="header-actions">
+                    <a href="#" id="logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+                </div>
+            </header>
+            <main class="nav-main">
+                <h2>Choose an Option</h2>
+                <div class="nav-grid">
+                    <div class="nav-card" id="openJoin">
+                        <i class="fas fa-user-plus"></i>
+                        <h3>Join Class</h3>
+                    </div>
+                    <div class="nav-card" id="openCreate">
+                        <i class="fas fa-plus-circle"></i>
+                        <h3>Create Class</h3>
+                    </div>
+                    <div class="nav-card" id="openMaterials">
+                        <i class="fas fa-book-open"></i>
+                        <h3>Course Materials</h3>
+                    </div>
+                    <div class="nav-card" id="openAssignments">
+                        <i class="fas fa-tasks"></i>
+                        <h3>Assignments</h3>
+                    </div>
+                    <div class="nav-card" id="openCommunication">
+                        <i class="fas fa-comments"></i>
+                        <h3>Communication</h3>
+                    </div>
+                    <div class="nav-card" id="openLive">
+                        <i class="fas fa-video"></i>
+                        <h3>Live Lectures</h3>
+                    </div>
+                </div>
+            </main>
         </div>
-    </main>
+    </div>
 
     <!-- Join Class Modal -->
     <div id="joinModal" class="modal">
@@ -75,6 +77,7 @@
         </div>
     </div>
 
+    <script src="../assets/js/sidebar.js"></script>
     <script src="../assets/js/navigation.js"></script>
 </body>
 </html>
