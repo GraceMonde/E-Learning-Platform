@@ -83,7 +83,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function loadAnnouncements(classes) {
     if (!annContainer) return;
-    annContainer.textContent = 'Loading...';
+    annContainer.textContent = '';
     const items = [];
     for (const cls of classes) {
       try {
@@ -116,7 +116,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function loadUpcomingTasks(classes) {
     if (!tasksContainer) return;
-    tasksContainer.textContent = 'Loading...';
+    tasksContainer.textContent = '';
     const items = [];
     const now = new Date();
     for (const cls of classes) {
@@ -219,7 +219,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
     const reqContainer = document.createElement('div');
     reqContainer.className = 'request-container';
-    reqContainer.textContent = 'Loading...';
     card.appendChild(reqContainer);
 
     try {

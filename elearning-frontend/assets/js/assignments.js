@@ -197,7 +197,6 @@ document.addEventListener('DOMContentLoaded', () => {
     }
     const container = document.createElement('div');
     container.className = 'submissions';
-    container.textContent = 'Loading...';
     card.appendChild(container);
     const res = await fetch(`/api/assignments/${assignmentId}/submissions`, {
       headers: { 'Authorization': `Bearer ${token}` }
