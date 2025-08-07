@@ -54,14 +54,15 @@ h2 {
     margin-top: 30px;
 }
 
+
 .card {
-    background: #ffffff;
+    background: linear-gradient(145deg, #ffffff, #f1f5f9);
     padding: 40px; /* Inside padding */
     border-radius: 8px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     font-weight: bold;
-    font-size: 1.3rem;
+    font-size: 1.1rem;
     border-top: 4px solid #f59e0b; /* Accent orange */
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
@@ -87,6 +88,70 @@ button {
 
 button:hover {
     background-color: #d97706; /* Darker orange */
+}
+
+/* Classes list styling */
+.classes-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+    gap: 15px;
+    margin-top: 20px;
+}
+
+.class-card {
+    background: #f9fafb;
+    border: 1px solid #e5e7eb;
+    border-radius: 6px;
+    padding: 15px;
+    text-align: left;
+    font-weight: normal;
+    font-size: 0.95rem;
+}
+
+.class-card h4 {
+    margin: 0 0 8px;
+    font-size: 1.1rem;
+    color: #1f2937;
+}
+
+.class-card p {
+    margin: 4px 0;
+    color: #4b5563;
+}
+
+.class-actions {
+    margin-top: 10px;
+}
+
+.class-actions button {
+    margin-right: 5px;
+    font-size: 0.85rem;
+    padding: 6px 12px;
+}
+
+.request-container {
+    margin-top: 10px;
+    background: #ffffff;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 10px;
+}
+
+.request-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 8px;
+}
+
+.request-row:last-child {
+    margin-bottom: 0;
+}
+
+.request-row button {
+    margin-left: 5px;
+    font-size: 0.8rem;
+    padding: 4px 10px;
 }
 
 /* Navigation Page Styling */

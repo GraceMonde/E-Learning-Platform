@@ -45,6 +45,8 @@ router.get('/', authenticateToken, async (req, res) => {
       'SELECT class_id, title, description, invite_code FROM classes WHERE instructor_id = ?',
       [req.user.user_id]
     );
+    instructorClasses.forEach(cls => (cls.is_instructor = true));
+
     const studentClasses = await query(
       `SELECT c.class_id, c.title, c.description, c.invite_code
        FROM classes c
@@ -52,6 +54,7 @@ router.get('/', authenticateToken, async (req, res) => {
        WHERE e.student_id = ? AND e.status = 'approved'`,
       [req.user.user_id]
     );
+    studentClasses.forEach(cls => (cls.is_instructor = false));
 
     const allClasses = [...instructorClasses];
     studentClasses.forEach(cls => {
@@ -165,6 +168,28 @@ router.post('/join', authenticateToken, async (req, res) => {
     res.status(201).json({ message: 'Enrollment request submitted.' });
   } catch (err) {
     console.error('Join class error:', err);
+    res.status(500).json({ message: 'Server error', error: err });
+  }
+});
+
+// Get pending enrollments for a class
+router.get('/:classId/enrollments', authenticateToken, async (req, res) => {
+  const { classId } = req.params;
+  try {
+    const classes = await query('SELECT class_id FROM classes WHERE class_id = ? AND instructor_id = ?', [classId, req.user.user_id]);
+    if (classes.length === 0) {
+      return res.status(403).json({ message: 'Not authorized to view enrollments for this class.' });
+    }
+    const enrollments = await query(
+      `SELECT e.enrollment_id, u.name
+       FROM enrollments e
+       JOIN users u ON e.student_id = u.user_id
+       WHERE e.class_id = ? AND e.status = 'pending'`,
+      [classId]
+    );
+    res.json(enrollments);
+  } catch (err) {
+    console.error('Fetch enrollments error:', err);
     res.status(500).json({ message: 'Server error', error: err });
   }
 });
