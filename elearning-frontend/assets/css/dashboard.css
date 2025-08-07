@@ -1,7 +1,14 @@
 /* General Page Styling */
+:root {
+    --primary-color: #1f2937;
+    --accent-color: #f59e0b;
+    --accent-color-dark: #d97706;
+    --bg-color: #f4f6f9;
+}
+
 body {
-    font-family: 'Segoe UI', Tahoma, sans-serif;
-    background-color: #f4f6f9;
+    font-family: 'Inter', 'Segoe UI', Tahoma, sans-serif;
+    background-color: var(--bg-color);
     margin: 0;
     padding: 0;
     color: #333;
@@ -12,7 +19,7 @@ body {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #1f2937; /* Dark navy */
+    background: linear-gradient(90deg, var(--primary-color), #111827); /* Dark navy gradient */
     color: white;
     padding: 15px 30px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -21,7 +28,7 @@ body {
 .logo {
     font-weight: bold;
     font-size: 22px;
-    color: #f59e0b; /* Accent orange */
+    color: var(--accent-color); /* Accent orange */
 }
 
 .header nav a {
@@ -32,18 +39,22 @@ body {
 }
 
 .header nav a:hover {
-    color: #f59e0b;
+    color: var(--accent-color);
 }
 
 /* Main Content */
 main {
     padding: 30px;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 h2 {
     margin-bottom: 25px;
     font-size: 24px;
-    color: #1f2937;
+    color: var(--primary-color);
+    text-align: center;
+    font-weight: 600;
 }
 
 /* Dashboard Grid */
@@ -58,18 +69,32 @@ h2 {
 .card {
     background: linear-gradient(145deg, #ffffff, #f1f5f9);
     padding: 40px; /* Inside padding */
-    border-radius: 8px;
+    border-radius: 10px;
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     text-align: center;
     font-weight: bold;
     font-size: 1.1rem;
-    border-top: 4px solid #f59e0b; /* Accent orange */
+    border-top: 4px solid var(--accent-color); /* Accent orange */
+    border: 1px solid #e5e7eb;
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
 .card:hover {
     transform: translateY(-5px);
     box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.card h3 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+    margin-top: 0;
+}
+
+.card h3 i {
+    margin-right: 10px;
+    color: var(--accent-color);
 }
 
 .info-list {
@@ -83,6 +108,12 @@ h2 {
 .info-list p {
     margin: 4px 0;
     line-height: 1.4;
+    padding: 6px 0;
+    border-bottom: 1px solid #e5e7eb;
+}
+
+.info-list p:last-child {
+    border-bottom: none;
 }
 
 /* Buttons (shared for navigation and other pages) */
@@ -90,7 +121,7 @@ button {
     padding: 12px 24px;
     margin: 10px 10px 10px 0;
     border: none;
-    background-color: #f59e0b; /* Accent orange */
+    background-color: var(--accent-color); /* Accent orange */
     color: white;
     font-size: 16px;
     font-weight: bold;
@@ -100,7 +131,7 @@ button {
 }
 
 button:hover {
-    background-color: #d97706; /* Darker orange */
+    background-color: var(--accent-color-dark); /* Darker orange */
 }
 
 /* Classes list styling */
@@ -124,7 +155,7 @@ button:hover {
 .class-card h4 {
     margin: 0 0 8px;
     font-size: 1.1rem;
-    color: #1f2937;
+    color: var(--primary-color);
 }
 
 .class-card p {
@@ -205,7 +236,7 @@ button:hover {
 }
 
 .nav-btn {
-    background-color: #f59e0b;
+    background-color: var(--accent-color);
     color: white;
     padding: 15px 40px;
     border: none;
@@ -217,7 +248,7 @@ button:hover {
 }
 
 .nav-btn:hover {
-    background-color: #d97706;
+    background-color: var(--accent-color-dark);
     transform: translateY(-3px);
 }
 
