@@ -1,14 +1,27 @@
 /* Materials page styling */
-.materials-header {
+.materials-hero {
   background: linear-gradient(135deg, #1f2937, #0f172a);
   color: #f8fafc;
   text-align: center;
-  padding: 30px 0;
+  padding: 60px 20px;
 }
-.materials-header h2 {
-  font-size: 2rem;
+
+.materials-hero h1 {
+  font-size: 2.5rem;
   color: #f59e0b;
-  margin: 0;
+  margin-bottom: 10px;
+}
+
+.materials-hero p {
+  font-size: 1.1rem;
+  color: #e5e7eb;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.hero-content {
+  max-width: 900px;
+  margin: 0 auto;
 }
 
 .upload-section,
@@ -30,6 +43,18 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
+.course-selector label {
+  font-weight: 600;
+  margin-right: 10px;
+}
+
+.course-selector select {
+  padding: 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 1rem;
+}
+
 .upload-section h3,
 .materials-list h3 {
   font-size: 1.4rem;
@@ -45,6 +70,11 @@
   border: 1px solid #d1d5db;
   border-radius: 4px;
   font-size: 1rem;
+}
+
+#uploadForm {
+  display: grid;
+  gap: 12px;
 }
 
 #uploadForm button {
@@ -81,6 +111,7 @@
   border-radius: 6px;
   padding: 15px;
   margin-bottom: 12px;
+  transition: box-shadow 0.2s ease, transform 0.2s ease;
 }
 .material-title {
   font-size: 1.1rem;
@@ -113,4 +144,9 @@
   margin-right: 8px;
   font-size: 0.85rem;
   padding: 6px 12px;
+}
+
+.material-card:hover {
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  transform: translateY(-2px);
 }

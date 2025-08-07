@@ -4,6 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Course Materials</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/materials.css">
 </head>
@@ -16,20 +20,23 @@
         </nav>
     </header>
 
-    <section class="materials-header">
-        <h2>Course Materials</h2>
+    <section class="materials-hero">
+        <div class="hero-content">
+            <h1><i class="fas fa-book-open"></i> Course Materials</h1>
+            <p>Access, upload and manage resources for your classes.</p>
+        </div>
     </section>
 
     <main>
         <div class="course-selector">
-            <label for="courseSelect">Select Course:</label>
+            <label for="courseSelect"><i class="fas fa-chalkboard"></i> Select Course:</label>
             <select id="courseSelect">
                 <option value="">-- Choose a Course --</option>
             </select>
         </div>
 
         <div class="upload-section" style="display: none;">
-            <h3>Upload Material</h3>
+            <h3><i class="fas fa-upload"></i> Upload Material</h3>
             <form id="uploadForm">
                 <input type="text" name="title" id="title" placeholder="Title" required>
                 <input type="text" name="folder" id="folder" placeholder="Folder (e.g. Week 1)">
@@ -40,7 +47,7 @@
         </div>
 
         <div class="materials-list" style="display: none;">
-            <h3>Available Materials</h3>
+            <h3><i class="fas fa-folder-open"></i> Available Materials</h3>
             <div id="materialsContainer"></div>
         </div>
     </main>
