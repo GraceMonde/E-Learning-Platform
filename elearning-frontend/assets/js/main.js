@@ -13,6 +13,8 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   const container = document.getElementById('classesContainer');
+  const annContainer = document.getElementById('announcementsContainer');
+  const tasksContainer = document.getElementById('tasksContainer');
   const modal = document.getElementById('classModal');
   const modalTitle = document.getElementById('modalTitle');
   const modalDescription = document.getElementById('modalDescription');
@@ -62,17 +64,96 @@ document.addEventListener('DOMContentLoaded', () => {
         const div = document.createElement('div');
         div.textContent = 'No classes found.';
         container.appendChild(div);
-        return;
+      } else {
+        data.forEach(cls => createClassCard(cls));
       }
 
-      data.forEach(cls => createClassCard(cls));
+      loadAnnouncements(data);
+      loadUpcomingTasks(data);
     } catch (err) {
       const div = document.createElement('div');
       div.textContent = err.message === 'Failed to fetch'
         ? 'Unable to connect to the server.'
         : err.message;
       container.appendChild(div);
+      if (annContainer) annContainer.textContent = err.message;
+      if (tasksContainer) tasksContainer.textContent = err.message;
     }
+  }
+
+  async function loadAnnouncements(classes) {
+    if (!annContainer) return;
+    annContainer.textContent = 'Loading...';
+    const items = [];
+    for (const cls of classes) {
+      try {
+        const res = await fetch(`/api/announcements/class/${cls.class_id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (res.ok && Array.isArray(data)) {
+          data.forEach(a => items.push({
+            classTitle: cls.title,
+            message: a.message,
+            posted_at: a.posted_at
+          }));
+        }
+      } catch (_) {
+        /* ignore individual class errors */
+      }
+    }
+    if (items.length === 0) {
+      annContainer.textContent = 'No announcements.';
+      return;
+    }
+    items.sort((a, b) => new Date(b.posted_at) - new Date(a.posted_at));
+    items.slice(0, 5).forEach(item => {
+      const p = document.createElement('p');
+      p.innerHTML = `<strong>${item.classTitle}:</strong> ${item.message}`;
+      annContainer.appendChild(p);
+    });
+  }
+
+  async function loadUpcomingTasks(classes) {
+    if (!tasksContainer) return;
+    tasksContainer.textContent = 'Loading...';
+    const items = [];
+    const now = new Date();
+    for (const cls of classes) {
+      try {
+        const res = await fetch(`/api/assignments/class/${cls.class_id}`, {
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+        const data = await res.json();
+        if (res.ok && Array.isArray(data.assignments)) {
+          data.assignments.forEach(a => {
+            if (a.due_date) {
+              const due = new Date(a.due_date);
+              if (due >= now) {
+                items.push({
+                  classTitle: cls.title,
+                  title: a.title,
+                  due_date: a.due_date
+                });
+              }
+            }
+          });
+        }
+      } catch (_) {
+        /* ignore individual class errors */
+      }
+    }
+    if (items.length === 0) {
+      tasksContainer.textContent = 'No upcoming tasks.';
+      return;
+    }
+    items.sort((a, b) => new Date(a.due_date) - new Date(b.due_date));
+    items.slice(0, 5).forEach(item => {
+      const p = document.createElement('p');
+      const date = new Date(item.due_date).toLocaleDateString();
+      p.innerHTML = `<strong>${item.classTitle}:</strong> ${item.title} - ${date}`;
+      tasksContainer.appendChild(p);
+    });
   }
 
   function createClassCard(cls) {
