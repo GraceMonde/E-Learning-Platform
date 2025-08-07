@@ -15,6 +15,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const container = document.getElementById('classesContainer');
   const annContainer = document.getElementById('announcementsContainer');
   const tasksContainer = document.getElementById('tasksContainer');
+  const statCourses = document.getElementById('statCourses');
+  const statCompleted = document.getElementById('statCompleted');
+  const statPending = document.getElementById('statPending');
   const modal = document.getElementById('classModal');
   const modalTitle = document.getElementById('modalTitle');
   const modalDescription = document.getElementById('modalDescription');
@@ -53,12 +56,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
   async function loadClasses() {
     container.innerHTML = '';
+    if (statCourses) statCourses.textContent = '0';
+    if (statCompleted) statCompleted.textContent = '0';
+    if (statPending) statPending.textContent = '0';
     try {
       const res = await fetch('/api/classes', {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Failed to load classes');
+
+      if (statCourses) statCourses.textContent = data.length;
 
       if (data.length === 0) {
         const div = document.createElement('div');
@@ -78,6 +86,9 @@ document.addEventListener('DOMContentLoaded', () => {
       container.appendChild(div);
       if (annContainer) annContainer.textContent = err.message;
       if (tasksContainer) tasksContainer.textContent = err.message;
+      if (statCourses) statCourses.textContent = '0';
+      if (statCompleted) statCompleted.textContent = '0';
+      if (statPending) statPending.textContent = '0';
     }
   }
 
@@ -115,10 +126,11 @@ document.addEventListener('DOMContentLoaded', () => {
   }
 
   async function loadUpcomingTasks(classes) {
-    if (!tasksContainer) return;
-    tasksContainer.textContent = '';
     const items = [];
+    let completedCount = 0;
+    let pendingCount = 0;
     const now = new Date();
+    if (tasksContainer) tasksContainer.textContent = '';
     for (const cls of classes) {
       try {
         const res = await fetch(`/api/assignments/class/${cls.class_id}`, {
@@ -127,14 +139,19 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = await res.json();
         if (res.ok && Array.isArray(data.assignments)) {
           data.assignments.forEach(a => {
-            if (a.due_date) {
-              const due = new Date(a.due_date);
-              if (due >= now) {
-                items.push({
-                  classTitle: cls.title,
-                  title: a.title,
-                  due_date: a.due_date
-                });
+            if (a.submission_id) {
+              completedCount++;
+            } else {
+              pendingCount++;
+              if (a.due_date) {
+                const due = new Date(a.due_date);
+                if (due >= now) {
+                  items.push({
+                    classTitle: cls.title,
+                    title: a.title,
+                    due_date: a.due_date
+                  });
+                }
               }
             }
           });
@@ -143,6 +160,9 @@ document.addEventListener('DOMContentLoaded', () => {
         /* ignore individual class errors */
       }
     }
+    if (statCompleted) statCompleted.textContent = completedCount;
+    if (statPending) statPending.textContent = pendingCount;
+    if (!tasksContainer) return;
     if (items.length === 0) {
       tasksContainer.textContent = 'No upcoming tasks.';
       return;
