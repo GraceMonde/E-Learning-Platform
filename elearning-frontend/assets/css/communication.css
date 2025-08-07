@@ -1,74 +1,118 @@
-.communication-header {
-  background: #0d6efd;
-  color: #fff;
+/* Communication page layout */
+.communication-page {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 40px 30px;
+}
+
+.page-header {
   text-align: center;
-  padding: 20px;
+  margin-bottom: 30px;
+}
+
+.page-header h2 {
+  margin-bottom: 15px;
+  color: var(--primary-color);
 }
 
 .course-selector {
-  margin: 20px 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  margin-top: 10px;
 }
 
-.announce-section {
-  background: #fff3cd;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-.announce-section h3 {
-  color: #856404;
-  font-size: 1.5rem;
+.course-selector label {
+  font-weight: 600;
+  color: var(--primary-color);
 }
 
-.thread-section {
-  background: #e2e3e5;
-  padding: 20px;
-  border-radius: 8px;
-  margin-bottom: 20px;
-}
-.thread-section h3 {
-  color: #383d41;
-  font-size: 1.5rem;
+.course-selector select {
+  padding: 8px 12px;
+  font-size: 16px;
 }
 
+.announce-section,
+.thread-section,
 .notification-section {
-  background: #d1e7dd;
-  padding: 20px;
+  background: #ffffff;
+  border: 1px solid #e5e7eb;
   border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+  padding: 20px 25px;
+  margin-bottom: 30px;
 }
+
+.announce-section h3,
+.thread-section h3,
 .notification-section h3 {
-  color: #0f5132;
-  font-size: 1.5rem;
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: var(--primary-color);
 }
 
-form textarea,
-form input {
+.announce-section form,
+.thread-section form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 15px;
+}
+
+.announce-section textarea,
+.thread-section textarea,
+.thread-section input {
   width: 100%;
-  padding: 8px;
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
+  font-size: 16px;
+  resize: vertical;
+}
+
+#announcementsList,
+#threadsList,
+#notificationList {
+  margin-top: 10px;
+}
+
+.announcement,
+.thread,
+.notification {
+  background: #f9fafb;
+  border: 1px solid #e5e7eb;
+  border-radius: 4px;
+  padding: 10px 12px;
   margin-bottom: 10px;
-  font-size: 1rem;
-}
-form button {
-  padding: 8px 16px;
 }
 
-.announcement {
-  border-bottom: 1px solid #ffeeba;
-  padding: 8px 0;
+.thread p {
+  margin: 8px 0;
+  color: #4b5563;
 }
 
-.thread {
-  border-bottom: 1px solid #ced4da;
-  padding: 8px 0;
+.thread form {
+  display: flex;
+  gap: 10px;
+  margin-top: 10px;
+}
+
+.comment-input {
+  flex: 1;
+  padding: 6px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 4px;
 }
 
 .comment {
-  margin-left: 15px;
+  margin-left: 20px;
+  margin-top: 5px;
+  padding: 5px 10px;
+  background: #fff;
+  border-left: 2px solid var(--accent-color);
   font-size: 0.9rem;
-  color: #495057;
+  color: #4b5563;
+  border-radius: 0 4px 4px 0;
 }
 
-.notification {
-  border-bottom: 1px solid #badbcc;
-  padding: 6px 0;
-}
