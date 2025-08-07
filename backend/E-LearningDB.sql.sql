@@ -44,6 +44,7 @@ CREATE TABLE materials (
   class_id INT,
   title VARCHAR(255),
   file_url TEXT,
+  folder VARCHAR(255),
   tags TEXT,
   uploaded_by INT,
   uploaded_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -160,8 +161,8 @@ INSERT INTO enrollments (class_id, student_id, status) VALUES
 (1, 1, 'approved');
 
 -- SAMPLE MATERIAL
-INSERT INTO materials (class_id, title, file_url, tags, uploaded_by) VALUES
-(1, 'Week 1 Slides', 'materials/week1.pdf', 'intro,web', 2);
+INSERT INTO materials (class_id, title, file_url, folder, tags, uploaded_by) VALUES
+(1, 'Week 1 Slides', 'materials/week1.pdf', 'Week 1', 'intro,web', 2);
 
 -- SAMPLE ASSIGNMENT
 INSERT INTO assignments (class_id, title, description, due_date) VALUES

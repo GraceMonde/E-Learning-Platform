@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Course Materials</title>
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/materials.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">eLearnHub</div>
+        <nav>
+            <a href="navigation.html">Navigation</a>
+            <a href="#" id="logout">Logout</a>
+        </nav>
+    </header>
+
+    <section class="materials-header">
+        <h2>Course Materials</h2>
+    </section>
+
+    <main>
+        <div class="upload-section">
+            <h3>Upload Material</h3>
+            <form id="uploadForm">
+                <input type="text" name="title" id="title" placeholder="Title" required>
+                <input type="text" name="folder" id="folder" placeholder="Folder (e.g. Week 1)">
+                <input type="text" name="tags" id="tags" placeholder="Tags (comma separated)">
+                <input type="file" name="file" id="file" required>
+                <button type="submit">Upload</button>
+            </form>
+        </div>
+
+        <div class="materials-list">
+            <h3>Available Materials</h3>
+            <div id="materialsContainer"></div>
+        </div>
+    </main>
+
+    <script src="../assets/js/materials.js"></script>
+</body>
+</html>

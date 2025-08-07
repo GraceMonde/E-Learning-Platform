@@ -10,6 +10,7 @@ const userRoutes = require('./routes/user');
 const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
 const classRoutes = require('./routes/classes');
+const materialRoutes = require('./routes/materials');
 
 const app = express();
 app.use(cors());
@@ -17,6 +18,7 @@ app.use(express.json());
 
 // Serve static files
 app.use(express.static(path.join(__dirname, '../elearning-frontend')));
+app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 
 // Serve the welcome page for "/"
 app.get('/', (req, res) => {
@@ -28,6 +30,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/classes', classRoutes);
+app.use('/api/materials', materialRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;

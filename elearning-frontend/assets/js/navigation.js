@@ -3,6 +3,7 @@
 document.addEventListener('DOMContentLoaded', () => {
   const joinBtn = document.getElementById('openJoin');
   const createBtn = document.getElementById('openCreate');
+  const materialsBtn = document.getElementById('openMaterials');
   const joinModal = document.getElementById('joinModal');
   const createModal = document.getElementById('createModal');
   const closeButtons = document.querySelectorAll('.close');
@@ -10,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
   // Open modals
   joinBtn.addEventListener('click', () => joinModal.classList.add('active'));
   createBtn.addEventListener('click', () => createModal.classList.add('active'));
+  materialsBtn.addEventListener('click', () => {
+    window.location.href = 'materials.html?classId=1';
+  });
 
   // Close modals
   closeButtons.forEach(btn => {
