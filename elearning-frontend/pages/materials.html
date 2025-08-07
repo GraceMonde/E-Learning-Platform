@@ -21,7 +21,14 @@
     </section>
 
     <main>
-        <div class="upload-section">
+        <div class="course-selector">
+            <label for="courseSelect">Select Course:</label>
+            <select id="courseSelect">
+                <option value="">-- Choose a Course --</option>
+            </select>
+        </div>
+
+        <div class="upload-section" style="display: none;">
             <h3>Upload Material</h3>
             <form id="uploadForm">
                 <input type="text" name="title" id="title" placeholder="Title" required>
@@ -32,7 +39,7 @@
             </form>
         </div>
 
-        <div class="materials-list">
+        <div class="materials-list" style="display: none;">
             <h3>Available Materials</h3>
             <div id="materialsContainer"></div>
         </div>

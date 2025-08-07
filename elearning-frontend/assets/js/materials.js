@@ -1,12 +1,48 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const classId = new URLSearchParams(window.location.search).get('classId') || 1;
+  const courseSelect = document.getElementById('courseSelect');
   const uploadForm = document.getElementById('uploadForm');
   const materialsContainer = document.getElementById('materialsContainer');
+  const uploadSection = document.querySelector('.upload-section');
+  const materialsList = document.querySelector('.materials-list');
+  let selectedClassId = null;
+
+  async function loadCourses() {
+    const token = localStorage.getItem('userToken');
+    if (!token) return;
+    try {
+      const res = await fetch('http://localhost:5000/api/classes', {
+        headers: { 'Authorization': `Bearer ${token}` }
+      });
+      const data = await res.json();
+      data.forEach(cls => {
+        const opt = document.createElement('option');
+        opt.value = cls.class_id;
+        opt.textContent = cls.title;
+        courseSelect.appendChild(opt);
+      });
+    } catch (err) {
+      console.error('Failed to load courses', err);
+    }
+  }
+
+  courseSelect.addEventListener('change', () => {
+    selectedClassId = courseSelect.value;
+    if (selectedClassId) {
+      uploadSection.style.display = '';
+      materialsList.style.display = '';
+      loadMaterials();
+    } else {
+      uploadSection.style.display = 'none';
+      materialsList.style.display = 'none';
+      materialsContainer.innerHTML = '';
+    }
+  });
 
   async function loadMaterials() {
     materialsContainer.innerHTML = '';
+    if (!selectedClassId) return;
     try {
-      const res = await fetch(`http://localhost:5000/api/materials/class/${classId}`);
+      const res = await fetch(`http://localhost:5000/api/materials/class/${selectedClassId}`);
       const data = await res.json();
       const grouped = {};
       data.forEach(m => {
@@ -70,6 +106,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   uploadForm.addEventListener('submit', async (e) => {
     e.preventDefault();
+    if (!selectedClassId) return;
     const fileInput = document.getElementById('file');
     const file = fileInput.files[0];
     const reader = new FileReader();
@@ -83,7 +120,7 @@ document.addEventListener('DOMContentLoaded', () => {
         fileName: file.name,
         fileData: base64
       };
-      await fetch(`http://localhost:5000/api/materials/class/${classId}`, {
+      await fetch(`http://localhost:5000/api/materials/class/${selectedClassId}`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(body)
@@ -115,5 +152,5 @@ document.addEventListener('DOMContentLoaded', () => {
     loadMaterials();
   }
 
-  loadMaterials();
+  loadCourses();
 });

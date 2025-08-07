@@ -12,7 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
   joinBtn.addEventListener('click', () => joinModal.classList.add('active'));
   createBtn.addEventListener('click', () => createModal.classList.add('active'));
   materialsBtn.addEventListener('click', () => {
-    window.location.href = 'materials.html?classId=1';
+    window.location.href = 'materials.html';
   });
 
   // Close modals
