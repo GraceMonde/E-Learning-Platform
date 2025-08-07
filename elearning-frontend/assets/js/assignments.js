@@ -284,8 +284,16 @@ document.addEventListener('DOMContentLoaded', () => {
   // logout handling
   const logout = document.getElementById('logout');
   if (logout) {
-    logout.addEventListener('click', (e) => {
+    logout.addEventListener('click', async (e) => {
       e.preventDefault();
+      try {
+        await fetch('http://localhost:5000/api/auth/logout', {
+          method: 'POST',
+          headers: { 'Authorization': `Bearer ${token}` }
+        });
+      } catch (_) {
+        // ignore errors
+      }
       localStorage.removeItem('userToken');
       localStorage.removeItem('userInfo');
       window.location.href = 'login.html';

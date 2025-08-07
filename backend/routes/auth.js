@@ -5,6 +5,22 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
+// Middleware to verify a JWT and attach the decoded user to the request
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers['authorization'];
+  const token = authHeader && authHeader.split(' ')[1];
+  if (!token) {
+    return res.status(401).json({ message: 'No token provided.' });
+  }
+  jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
+    if (err) {
+      return res.status(403).json({ message: 'Invalid token.' });
+    }
+    req.user = user;
+    next();
+  });
+}
+
 // Utility: Promisify db.query for async/await
 const query = (sql, params) => new Promise((resolve, reject) => {
   db.query(sql, params, (err, results) => {
@@ -87,6 +103,15 @@ router.post('/register', async (req, res) => {
     console.error('Register error:', err);
     res.status(500).json({ message: 'Server error', error: err });
   }
+});
+
+// =================== LOGOUT ===================
+// For JWT-based auth, logout is handled on the client by discarding the token.
+// This endpoint exists to allow the client to signal a logout and to maintain
+// symmetry with login. The token is validated to ensure only authenticated users
+// can hit this route.
+router.post('/logout', authenticateToken, (req, res) => {
+  res.json({ message: 'Logged out successfully.' });
 });
 
 module.exports = router;
