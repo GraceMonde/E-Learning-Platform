@@ -35,20 +35,31 @@ router.post('/class/:classId', (req, res) => {
   if (!uploaded_by) {
     return res.status(400).json({ message: 'Uploader id is required' });
   }
-  const buffer = Buffer.from(fileData, 'base64');
-  const userDir = path.join(uploadDir, String(uploaded_by));
-  if (!fs.existsSync(userDir)) {
-    fs.mkdirSync(userDir, { recursive: true });
-  }
-  const storedName = `${Date.now()}-${fileName}`;
-  const filePath = path.join(userDir, storedName);
-  fs.writeFile(filePath, buffer, (err) => {
-    if (err) return res.status(500).json({ message: 'File save error', error: err });
-    const fileUrl = `/uploads/${uploaded_by}/${storedName}`;
-    const sql = 'INSERT INTO materials (class_id, title, file_url, folder, tags, uploaded_by) VALUES (?, ?, ?, ?, ?, ?)';
-    db.query(sql, [classId, title, fileUrl, folder, tags, uploaded_by], (err, result) => {
-      if (err) return res.status(500).json({ message: 'Database error', error: err });
-      res.json({ material_id: result.insertId, file_url: fileUrl });
+
+  db.query('SELECT instructor_id FROM classes WHERE class_id = ?', [classId], (err, results) => {
+    if (err) return res.status(500).json({ message: 'Database error', error: err });
+    if (results.length === 0) {
+      return res.status(404).json({ message: 'Class not found' });
+    }
+    if (results[0].instructor_id !== Number(uploaded_by)) {
+      return res.status(403).json({ message: 'Only the class creator can upload materials' });
+    }
+
+    const buffer = Buffer.from(fileData, 'base64');
+    const userDir = path.join(uploadDir, String(uploaded_by));
+    if (!fs.existsSync(userDir)) {
+      fs.mkdirSync(userDir, { recursive: true });
+    }
+    const storedName = `${Date.now()}-${fileName}`;
+    const filePath = path.join(userDir, storedName);
+    fs.writeFile(filePath, buffer, (err) => {
+      if (err) return res.status(500).json({ message: 'File save error', error: err });
+      const fileUrl = `/uploads/${uploaded_by}/${storedName}`;
+      const sql = 'INSERT INTO materials (class_id, title, file_url, folder, tags, uploaded_by) VALUES (?, ?, ?, ?, ?, ?)';
+      db.query(sql, [classId, title, fileUrl, folder, tags, uploaded_by], (err, result) => {
+        if (err) return res.status(500).json({ message: 'Database error', error: err });
+        res.json({ material_id: result.insertId, file_url: fileUrl });
+      });
     });
   });
 });
