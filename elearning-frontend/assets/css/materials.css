@@ -21,6 +21,15 @@
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
+.course-selector {
+  background: #ffffff;
+  max-width: 900px;
+  margin: 25px auto;
+  padding: 25px;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.06);
+}
+
 .upload-section h3,
 .materials-list h3 {
   font-size: 1.4rem;
