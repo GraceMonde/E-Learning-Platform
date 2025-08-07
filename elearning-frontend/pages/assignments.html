@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Assignments</title>
+    <link rel="stylesheet" href="../assets/css/dashboard.css">
+    <link rel="stylesheet" href="../assets/css/assignments.css">
+</head>
+<body>
+    <header class="header">
+        <div class="logo">eLearnHub</div>
+        <nav>
+            <a href="navigation.html">Navigation</a>
+            <a href="#" id="logout">Logout</a>
+        </nav>
+    </header>
+
+    <main class="assignment-page">
+        <h2>Assignment Management</h2>
+        <div class="course-selector">
+            <label for="classSelect">Select Class:</label>
+            <select id="classSelect">
+                <option value="">-- Choose a Class --</option>
+            </select>
+        </div>
+
+        <div class="create-assignment" style="display:none;">
+            <h3>Create Assignment</h3>
+            <input type="text" id="assnTitle" placeholder="Title">
+            <textarea id="assnDesc" placeholder="Description"></textarea>
+            <input type="date" id="assnDue">
+            <button id="createAssnBtn">Create</button>
+        </div>
+
+        <div id="assignmentList" class="assignment-list"></div>
+    </main>
+
+    <!-- Modal for submitting assignment -->
+    <div id="submitModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h3>Submit Assignment</h3>
+            <input type="file" id="submitFile">
+            <button id="submitFileBtn">Submit</button>
+        </div>
+    </div>
+
+    <script src="../assets/js/assignments.js"></script>
+</body>
+</html>

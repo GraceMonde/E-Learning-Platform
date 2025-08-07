@@ -11,6 +11,7 @@ const authRoutes = require('./routes/auth');
 const profileRoutes = require('./routes/profile');
 const classRoutes = require('./routes/classes');
 const materialRoutes = require('./routes/materials');
+const assignmentRoutes = require('./routes/assignments');
 
 const app = express();
 app.use(cors());
@@ -33,6 +34,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/profile', profileRoutes);
 app.use('/api/classes', classRoutes);
 app.use('/api/materials', materialRoutes);
+app.use('/api/assignments', assignmentRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
