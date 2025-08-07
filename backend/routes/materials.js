@@ -32,12 +32,19 @@ router.post('/class/:classId', (req, res) => {
   if (!fileName || !fileData) {
     return res.status(400).json({ message: 'File data is required' });
   }
+  if (!uploaded_by) {
+    return res.status(400).json({ message: 'Uploader id is required' });
+  }
   const buffer = Buffer.from(fileData, 'base64');
+  const userDir = path.join(uploadDir, String(uploaded_by));
+  if (!fs.existsSync(userDir)) {
+    fs.mkdirSync(userDir, { recursive: true });
+  }
   const storedName = `${Date.now()}-${fileName}`;
-  const filePath = path.join(uploadDir, storedName);
+  const filePath = path.join(userDir, storedName);
   fs.writeFile(filePath, buffer, (err) => {
     if (err) return res.status(500).json({ message: 'File save error', error: err });
-    const fileUrl = `/uploads/${storedName}`;
+    const fileUrl = `/uploads/${uploaded_by}/${storedName}`;
     const sql = 'INSERT INTO materials (class_id, title, file_url, folder, tags, uploaded_by) VALUES (?, ?, ?, ?, ?, ?)';
     db.query(sql, [classId, title, fileUrl, folder, tags, uploaded_by], (err, result) => {
       if (err) return res.status(500).json({ message: 'Database error', error: err });
@@ -49,16 +56,23 @@ router.post('/class/:classId', (req, res) => {
 // Update material metadata
 router.put('/:materialId', (req, res) => {
   const materialId = req.params.materialId;
-  const { title, tags, folder, fileName, fileData } = req.body;
+  const { title, tags, folder, fileName, fileData, uploaded_by } = req.body;
   const params = [title, tags, folder];
   let sql = 'UPDATE materials SET title = ?, tags = ?, folder = ?';
   if (fileName && fileData) {
+    if (!uploaded_by) {
+      return res.status(400).json({ message: 'Uploader id is required for file update' });
+    }
     const buffer = Buffer.from(fileData, 'base64');
+    const userDir = path.join(uploadDir, String(uploaded_by));
+    if (!fs.existsSync(userDir)) {
+      fs.mkdirSync(userDir, { recursive: true });
+    }
     const storedName = `${Date.now()}-${fileName}`;
-    const filePath = path.join(uploadDir, storedName);
+    const filePath = path.join(userDir, storedName);
     fs.writeFileSync(filePath, buffer);
     sql += ', file_url = ?';
-    params.push(`/uploads/${storedName}`);
+    params.push(`/uploads/${uploaded_by}/${storedName}`);
   }
   sql += ' WHERE material_id = ?';
   params.push(materialId);
@@ -75,7 +89,7 @@ router.delete('/:materialId', (req, res) => {
     if (err) return res.status(500).json({ message: 'Database error', error: err });
     if (results.length === 0) return res.status(404).json({ message: 'Material not found' });
     const fileUrl = results[0].file_url;
-    const filePath = path.join(__dirname, '..', fileUrl);
+    const filePath = path.join(__dirname, '..', fileUrl.replace(/^\/+/,'') );
     fs.unlink(filePath, () => { /* ignore errors */ });
     db.query('DELETE FROM materials WHERE material_id = ?', [materialId], (err2) => {
       if (err2) return res.status(500).json({ message: 'Database error', error: err2 });

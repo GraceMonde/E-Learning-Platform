@@ -156,8 +156,10 @@ document.addEventListener('DOMContentLoaded', () => {
           name.textContent = req.name;
           const approve = document.createElement('button');
           approve.textContent = 'Approve';
+          approve.classList.add('approve-btn');
           const reject = document.createElement('button');
           reject.textContent = 'Reject';
+          reject.classList.add('reject-btn');
           row.appendChild(name);
           row.appendChild(approve);
           row.appendChild(reject);
