@@ -5,6 +5,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const uploadSection = document.querySelector('.upload-section');
   const materialsList = document.querySelector('.materials-list');
   let selectedClassId = null;
+  const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
   async function loadCourses() {
     const token = localStorage.getItem('userToken');
@@ -116,7 +117,7 @@ document.addEventListener('DOMContentLoaded', () => {
         title: uploadForm.title.value,
         folder: uploadForm.folder.value,
         tags: uploadForm.tags.value,
-        uploaded_by: 1,
+        uploaded_by: userInfo.user_id,
         fileName: file.name,
         fileData: base64
       };

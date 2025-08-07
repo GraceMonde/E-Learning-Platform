@@ -154,6 +154,16 @@ button:hover {
     padding: 4px 10px;
 }
 
+.request-row button.approve-btn {
+    background-color: green;
+    color: #fff;
+}
+
+.request-row button.reject-btn {
+    background-color: red;
+    color: #fff;
+}
+
 /* Navigation Page Styling */
 .nav-main {
     display: flex;
