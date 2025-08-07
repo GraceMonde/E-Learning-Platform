@@ -121,13 +121,25 @@ document.addEventListener('DOMContentLoaded', () => {
         fileName: file.name,
         fileData: base64
       };
-      await fetch(`http://localhost:5000/api/materials/class/${selectedClassId}`, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(body)
-      });
-      uploadForm.reset();
-      loadMaterials();
+      try {
+        const res = await fetch(`http://localhost:5000/api/materials/class/${selectedClassId}`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(body)
+        });
+        if (!res.ok) {
+          const errText = await res.text();
+          throw new Error(errText || 'Upload failed');
+        }
+        alert('Upload successful');
+        uploadForm.reset();
+        loadMaterials();
+      } catch (err) {
+        alert('Upload failed: ' + err.message);
+      }
+    };
+    reader.onerror = () => {
+      alert('Unable to read file');
     };
     reader.readAsDataURL(file);
   });
