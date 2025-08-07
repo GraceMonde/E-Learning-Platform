@@ -17,24 +17,40 @@
     </header>
 
     <main class="assignment-page">
-        <h2>Assignment Management</h2>
-        <div class="course-selector">
-            <label for="classSelect">Select Class:</label>
-            <select id="classSelect">
-                <option value="">-- Choose a Class --</option>
-            </select>
-        </div>
+        <section class="page-header">
+            <h2>Assignment Management</h2>
+            <div class="course-selector">
+                <label for="classSelect">Select Class:</label>
+                <select id="classSelect">
+                    <option value="">-- Choose a Class --</option>
+                </select>
+            </div>
+        </section>
 
-        <div class="create-assignment" style="display:none;">
+        <section class="create-assignment" style="display:none;">
             <h3>Create Assignment</h3>
-            <input type="text" id="assnTitle" placeholder="Title">
-            <textarea id="assnDesc" placeholder="Description"></textarea>
-            <input type="date" id="assnDue">
-            <input type="file" id="assnResource">
+            <div class="form-grid">
+                <div class="form-control">
+                    <label for="assnTitle">Title</label>
+                    <input type="text" id="assnTitle" placeholder="Assignment Title">
+                </div>
+                <div class="form-control">
+                    <label for="assnDesc">Description</label>
+                    <textarea id="assnDesc" placeholder="Description"></textarea>
+                </div>
+                <div class="form-control">
+                    <label for="assnDue">Due Date</label>
+                    <input type="date" id="assnDue">
+                </div>
+                <div class="form-control">
+                    <label for="assnResource">Resource</label>
+                    <input type="file" id="assnResource">
+                </div>
+            </div>
             <button id="createAssnBtn">Create</button>
-        </div>
+        </section>
 
-        <div id="assignmentList" class="assignment-list"></div>
+        <section id="assignmentList" class="assignment-list"></section>
     </main>
 
     <!-- Modal for submitting assignment -->
