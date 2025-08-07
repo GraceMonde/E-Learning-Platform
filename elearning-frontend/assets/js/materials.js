@@ -5,6 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const uploadSection = document.querySelector('.upload-section');
   const materialsList = document.querySelector('.materials-list');
   let selectedClassId = null;
+  let courses = [];
+  let currentClassIsInstructor = false;
   const userInfo = JSON.parse(localStorage.getItem('userInfo') || '{}');
 
   async function loadCourses() {
@@ -15,6 +17,7 @@ document.addEventListener('DOMContentLoaded', () => {
         headers: { 'Authorization': `Bearer ${token}` }
       });
       const data = await res.json();
+      courses = data;
       data.forEach(cls => {
         const opt = document.createElement('option');
         opt.value = cls.class_id;
@@ -28,8 +31,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   courseSelect.addEventListener('change', () => {
     selectedClassId = courseSelect.value;
+    const cls = courses.find(c => String(c.class_id) === selectedClassId);
+    currentClassIsInstructor = !!(cls && cls.is_instructor);
     if (selectedClassId) {
-      uploadSection.style.display = '';
+      uploadSection.style.display = currentClassIsInstructor ? '' : 'none';
       materialsList.style.display = '';
       loadMaterials();
     } else {
@@ -84,17 +89,21 @@ document.addEventListener('DOMContentLoaded', () => {
           link.classList.add('download-link');
           card.appendChild(link);
 
-          const actions = document.createElement('div');
-          actions.classList.add('card-actions');
-          const editBtn = document.createElement('button');
-          editBtn.textContent = 'Edit';
-          editBtn.addEventListener('click', () => editMaterial(mat));
-          const delBtn = document.createElement('button');
-          delBtn.textContent = 'Delete';
-          delBtn.addEventListener('click', () => deleteMaterial(mat.material_id));
-          actions.appendChild(editBtn);
-          actions.appendChild(delBtn);
-          card.appendChild(actions);
+          if (currentClassIsInstructor) {
+            const actions = document.createElement('div');
+            actions.classList.add('card-actions');
+            const editBtn = document.createElement('button');
+            editBtn.textContent = 'Edit';
+            editBtn.classList.add('edit-btn');
+            editBtn.addEventListener('click', () => editMaterial(mat));
+            const delBtn = document.createElement('button');
+            delBtn.textContent = 'Delete';
+            delBtn.classList.add('delete-btn');
+            delBtn.addEventListener('click', () => deleteMaterial(mat.material_id));
+            actions.appendChild(editBtn);
+            actions.appendChild(delBtn);
+            card.appendChild(actions);
+          }
 
           section.appendChild(card);
         });

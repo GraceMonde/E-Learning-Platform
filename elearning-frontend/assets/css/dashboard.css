@@ -129,6 +129,17 @@ button:hover {
     padding: 6px 12px;
 }
 
+/* Specific action button colors */
+.edit-btn {
+    background-color: green;
+    color: #fff;
+}
+
+.delete-btn {
+    background-color: red;
+    color: #fff;
+}
+
 .request-container {
     margin-top: 10px;
     background: #ffffff;

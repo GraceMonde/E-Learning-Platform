@@ -90,8 +90,10 @@ document.addEventListener('DOMContentLoaded', () => {
       actions.className = 'class-actions';
       const editBtn = document.createElement('button');
       editBtn.textContent = 'Edit';
+      editBtn.classList.add('edit-btn');
       const deleteBtn = document.createElement('button');
       deleteBtn.textContent = 'Delete';
+      deleteBtn.classList.add('delete-btn');
       const requestsBtn = document.createElement('button');
       requestsBtn.textContent = 'Requests';
       actions.appendChild(editBtn);
