@@ -224,32 +224,46 @@ button:hover {
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
     text-align: center;
     padding: 40px 20px;
 }
 
-.button-container {
-    display: flex;
+.nav-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
     gap: 20px;
-    margin-top: 20px;
+    width: 100%;
+    max-width: 900px;
+    margin-top: 30px;
 }
 
-.nav-btn {
-    background-color: var(--accent-color);
-    color: white;
-    padding: 15px 40px;
-    border: none;
-    border-radius: 8px;
-    font-size: 18px;
-    font-weight: bold;
+.nav-card {
+    background: linear-gradient(145deg, #ffffff, #f1f5f9);
+    border: 1px solid #e5e7eb;
+    border-top: 4px solid var(--accent-color);
+    border-radius: 10px;
+    padding: 40px 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-    transition: background-color 0.3s ease, transform 0.2s ease;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
+    text-align: center;
 }
 
-.nav-btn:hover {
-    background-color: var(--accent-color-dark);
-    transform: translateY(-3px);
+.nav-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 15px rgba(0, 0, 0, 0.15);
+}
+
+.nav-card i {
+    font-size: 2rem;
+    color: var(--accent-color);
+    margin-bottom: 10px;
+}
+
+.nav-card h3 {
+    margin: 0;
+    font-size: 1.2rem;
+    color: var(--primary-color);
 }
 
 /* Modal Styles */
