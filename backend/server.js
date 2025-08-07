@@ -15,6 +15,8 @@ const assignmentRoutes = require('./routes/assignments');
 const announcementRoutes = require('./routes/announcements');
 const threadRoutes = require('./routes/threads');
 const notificationRoutes = require('./routes/notifications');
+const lectureRoutes = require('./routes/lectures');
+const analyticsRoutes = require('./routes/analytics');
 
 const app = express();
 app.use(cors());
@@ -41,6 +43,8 @@ app.use('/api/assignments', assignmentRoutes);
 app.use('/api/announcements', announcementRoutes);
 app.use('/api/threads', threadRoutes);
 app.use('/api/notifications', notificationRoutes);
+app.use('/api/lectures', lectureRoutes);
+app.use('/api/analytics', analyticsRoutes);
 
 // Start server
 const PORT = process.env.PORT || 5000;
