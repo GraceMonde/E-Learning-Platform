@@ -12,33 +12,70 @@
 
 </head>
 <body>
-    <header class="header">
-        <div class="logo">eLearnHub</div>
-        <nav>
-            <a href="navigation.html">Navigation</a>
-            <a href="profile.html">Profile</a>
-            <a href="#" id="logout">Logout</a>
-        </nav>
-    </header>
+    <div class="layout">
+        <aside class="sidebar">
+            <div class="sidebar-logo">eLearnHub</div>
+            <nav class="sidebar-nav">
+                <a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a>
+                <a href="materials.html"><i class="fas fa-book"></i> Materials</a>
+                <a href="assignments.html"><i class="fas fa-tasks"></i> Assignments</a>
+                <a href="live.html"><i class="fas fa-video"></i> Live</a>
+                <a href="communication.html"><i class="fas fa-comments"></i> Communication</a>
+                <a href="profile.html"><i class="fas fa-user"></i> Profile</a>
+                <a href="navigation.html"><i class="fas fa-compass"></i> Navigation</a>
+            </nav>
+        </aside>
+        <div class="main">
+            <header class="header">
+                <div class="page-title">Dashboard</div>
+                <div class="header-actions">
+                    <a href="#" id="logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+                </div>
+            </header>
+            <main>
+                <section class="stats">
+                    <div class="stat-card">
+                        <i class="fas fa-book-open"></i>
+                        <div>
+                            <div class="stat-title">Enrolled Courses</div>
+                            <div class="stat-value" id="statCourses">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <div class="stat-title">Completed Tasks</div>
+                            <div class="stat-value" id="statCompleted">0</div>
+                        </div>
+                    </div>
+                    <div class="stat-card">
+                        <i class="fas fa-clock"></i>
+                        <div>
+                            <div class="stat-title">Pending Tasks</div>
+                            <div class="stat-value" id="statPending">0</div>
+                        </div>
+                    </div>
+                </section>
 
-    <main>
-        <h2 id="welcomeMessage">Welcome, Student!</h2>
+                <h2 id="welcomeMessage">Welcome, Student!</h2>
 
-        <div class="dashboard-grid">
-            <div class="card">
-                <h3><i class="fas fa-chalkboard-teacher"></i> My Classes</h3>
-                <div id="classesContainer" class="classes-container"></div>
-            </div>
-            <div class="card">
-                <h3><i class="fas fa-bullhorn"></i> Announcements</h3>
-                <div id="announcementsContainer" class="info-list"></div>
-            </div>
-            <div class="card">
-                <h3><i class="fas fa-calendar-alt"></i> Upcoming tasks and deadlines</h3>
-                <div id="tasksContainer" class="info-list"></div>
-            </div>
+                <div class="dashboard-grid">
+                    <div class="card">
+                        <h3><i class="fas fa-chalkboard-teacher"></i> My Classes</h3>
+                        <div id="classesContainer" class="classes-container"></div>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-bullhorn"></i> Announcements</h3>
+                        <div id="announcementsContainer" class="info-list"></div>
+                    </div>
+                    <div class="card">
+                        <h3><i class="fas fa-calendar-alt"></i> Upcoming tasks and deadlines</h3>
+                        <div id="tasksContainer" class="info-list"></div>
+                    </div>
+                </div>
+            </main>
         </div>
-    </main>
+    </div>
 
     <!-- Modal for editing class -->
     <div id="classModal" class="modal">
