@@ -15,6 +15,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const assnTitle = document.getElementById('assnTitle');
   const assnDesc = document.getElementById('assnDesc');
   const assnDue = document.getElementById('assnDue');
+  const assnResource = document.getElementById('assnResource');
   const createBtn = document.getElementById('createAssnBtn');
   let currentAssignment = null;
   let currentClass = null;
@@ -62,6 +63,17 @@ document.addEventListener('DOMContentLoaded', () => {
       <p class="due">Due: ${a.due_date || 'N/A'}</p>
     `;
 
+    if (a.resource_url) {
+      const resLink = document.createElement('a');
+      resLink.href = a.resource_url;
+      resLink.textContent = 'Resource';
+      resLink.target = '_blank';
+      card.appendChild(resLink);
+    }
+
+    const now = new Date();
+    const due = a.due_date ? new Date(a.due_date) : null;
+
     if (isInstructor) {
       const editBtn = document.createElement('button');
       editBtn.textContent = 'Edit';
@@ -78,42 +90,64 @@ document.addEventListener('DOMContentLoaded', () => {
         grade.textContent = `Score: ${a.score}${a.feedback ? ' - ' + a.feedback : ''}`;
         card.appendChild(grade);
       }
-      const submitBtn = document.createElement('button');
-      submitBtn.textContent = a.submission_id ? 'Resubmit' : 'Submit';
-      submitBtn.addEventListener('click', () => {
-        currentAssignment = a.assignment_id;
-        submitModal.classList.add('active');
-      });
-      card.appendChild(submitBtn);
+      if (!due || due >= now) {
+        const submitBtn = document.createElement('button');
+        submitBtn.textContent = a.submission_id ? 'Resubmit' : 'Submit';
+        submitBtn.addEventListener('click', () => {
+          currentAssignment = a.assignment_id;
+          submitModal.classList.add('active');
+        });
+        card.appendChild(submitBtn);
+      } else {
+        const closed = document.createElement('p');
+        closed.className = 'closed';
+        closed.textContent = 'Submission closed';
+        card.appendChild(closed);
+      }
     }
     assignmentList.appendChild(card);
   }
 
   // create assignment
-  createBtn.addEventListener('click', async () => {
+  createBtn.addEventListener('click', () => {
     if (!currentClass) return;
     const body = {
       title: assnTitle.value,
       description: assnDesc.value,
       due_date: assnDue.value
     };
-    const res = await fetch(`/api/assignments/class/${currentClass}`, {
-      method: 'POST',
-      headers: {
-        'Authorization': `Bearer ${token}`,
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify(body)
-    });
-    const data = await res.json();
-    if (!res.ok) {
-      alert(data.message || 'Failed to create assignment');
-      return;
+    const file = assnResource.files[0];
+    const send = async (payload) => {
+      const res = await fetch(`/api/assignments/class/${currentClass}`, {
+        method: 'POST',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+      });
+      const data = await res.json();
+      if (!res.ok) {
+        alert(data.message || 'Failed to create assignment');
+        return;
+      }
+      assnTitle.value = '';
+      assnDesc.value = '';
+      assnDue.value = '';
+      assnResource.value = '';
+      loadAssignments();
+    };
+    if (file) {
+      const reader = new FileReader();
+      reader.onload = () => {
+        body.resourceName = file.name;
+        body.resourceData = reader.result.split(',')[1];
+        send(body);
+      };
+      reader.readAsDataURL(file);
+    } else {
+      send(body);
     }
-    assnTitle.value = '';
-    assnDesc.value = '';
-    assnDue.value = '';
-    loadAssignments();
   });
 
   // edit assignment
