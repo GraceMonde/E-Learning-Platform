@@ -19,21 +19,25 @@ npm install
 
 3. Create a `.env` file:
 
-Copy the example environment file and update with your own credentials:
+Copy the sample environment file and update it with your own credentials:
+
+```bash
+cp .env.example .env
+```
 
 4. Configure your `.env` file:
 
-Open `.env` and fill in your database credentials and JWT secret.
+Open `.env` and fill in your database credentials, JWT secret, and Google service account details.
 
 ## Example .env
-
 DB_HOST=localhost
 DB_USER=root
 DB_PASSWORD=yourpassword
 DB_NAME=elearning_platform
-
 JWT_SECRET=d4a4f5dcf23b1d6dfc4b37f57d445fc2fb28a2ba55ac52dcc564777e108689b1
-
+GOOGLE_CLIENT_EMAIL=your-service-account@project.iam.gserviceaccount.com
+# newline characters in the private key must be escaped as \\n
+GOOGLE_PRIVATE_KEY="-----BEGIN PRIVATE KEY-----\\nYOUR_PRIVATE_KEY\\n-----END PRIVATE KEY-----\\n"
 PORT=5000
 
 ## Project File Structure
