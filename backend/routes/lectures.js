@@ -4,6 +4,7 @@ const jwt = require('jsonwebtoken');
 require('dotenv').config();
 
 const { lectures } = require('../models/lectureStore');
+const { createGoogleMeet } = require('../config/googleMeet');
 
 function authenticateToken(req, res, next) {
   const authHeader = req.headers['authorization'];
@@ -16,21 +17,29 @@ function authenticateToken(req, res, next) {
   });
 }
 
-// Schedule a lecture
-router.post('/schedule', authenticateToken, (req, res) => {
+// Schedule a lecture and create a Google Meet link
+router.post('/schedule', authenticateToken, async (req, res) => {
   const { title, time } = req.body;
   if (!title || !time) {
     return res.status(400).json({ message: 'Title and time are required.' });
   }
-  const lecture = {
-    id: lectures.length + 1,
-    title,
-    time,
-    participants: [],
-    screenShared: false
-  };
-  lectures.push(lecture);
-  res.status(201).json(lecture);
+  try {
+    const meet = await createGoogleMeet(title, time);
+    const lecture = {
+      id: lectures.length + 1,
+      title,
+      time,
+      meetLink: meet.meetLink,
+      googleEventId: meet.id,
+      participants: [],
+      screenShared: false
+    };
+    lectures.push(lecture);
+    res.status(201).json({ id: lecture.id, meetLink: lecture.meetLink });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: 'Failed to schedule lecture.' });
+  }
 });
 
 // Join a lecture
@@ -40,7 +49,7 @@ router.post('/:id/join', authenticateToken, (req, res) => {
   if (!lecture.participants.includes(req.user.user_id)) {
     lecture.participants.push(req.user.user_id);
   }
-  res.json({ message: 'Joined lecture.' });
+  res.json({ meetLink: lecture.meetLink });
 });
 
 // Share screen during a lecture

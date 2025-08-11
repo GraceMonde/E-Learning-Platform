@@ -4,6 +4,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const shareForm = document.getElementById('shareForm');
   const refreshBtn = document.getElementById('refreshAnalytics');
   const analyticsOutput = document.getElementById('analyticsOutput');
+  const scheduledLinkEl = document.getElementById('scheduledLink');
+  const joinLinkEl = document.getElementById('joinLink');
   const token = localStorage.getItem('userToken');
 
   scheduleForm.addEventListener('submit', async (e) => {
@@ -21,6 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Failed to schedule');
+      scheduledLinkEl.innerHTML = `Meeting Link: <a href="${data.meetLink}" target="_blank">${data.meetLink}</a>`;
       alert(`Lecture scheduled with ID ${data.id}`);
     } catch (err) {
       alert(err.message);
@@ -39,7 +42,8 @@ document.addEventListener('DOMContentLoaded', () => {
       });
       const data = await res.json();
       if (!res.ok) throw new Error(data.message || 'Failed to join');
-      alert('Joined lecture.');
+      joinLinkEl.innerHTML = `Meeting Link: <a href="${data.meetLink}" target="_blank">${data.meetLink}</a>`;
+      window.open(data.meetLink, '_blank');
     } catch (err) {
       alert(err.message);
     }
