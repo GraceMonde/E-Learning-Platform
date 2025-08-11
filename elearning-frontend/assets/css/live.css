@@ -20,6 +20,12 @@
     font-size: 16px;
 }
 
+.meet-link {
+    margin-top: 10px;
+    word-break: break-all;
+    font-size: 14px;
+}
+
 .analytics-output {
     background: #f9fafb;
     padding: 15px;
