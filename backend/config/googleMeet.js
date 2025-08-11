@@ -32,6 +32,17 @@ async function getAccessToken() {
 }
 
 async function createGoogleMeet(summary, startTime) {
+  // If Google credentials are missing, fall back to a dummy meeting link
+  const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY && process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
+  if (!clientEmail || !privateKey) {
+    // Generate a pseudo meeting link so scheduling still works in development
+    return {
+      id: crypto.randomUUID(),
+      meetLink: `https://meet.google.com/${crypto.randomBytes(3).toString('hex')}`
+    };
+  }
+
   const accessToken = await getAccessToken();
   const startISO = new Date(startTime).toISOString();
   const endISO = new Date(new Date(startTime).getTime() + 60 * 60 * 1000).toISOString();
