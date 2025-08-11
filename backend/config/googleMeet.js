@@ -3,7 +3,7 @@ const crypto = require('crypto');
 
 async function getAccessToken() {
   const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY && process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY && process.env.GOOGLE_PRIVATE_KEY.replace(/\n/g, '\n');
   if (!clientEmail || !privateKey) {
     throw new Error('Google Meet credentials are not configured.');
   }
@@ -34,7 +34,7 @@ async function getAccessToken() {
 async function createGoogleMeet(summary, startTime) {
   // If Google credentials are missing, fall back to a dummy meeting link
   const clientEmail = process.env.GOOGLE_CLIENT_EMAIL;
-  const privateKey = process.env.GOOGLE_PRIVATE_KEY && process.env.GOOGLE_PRIVATE_KEY.replace(/\\n/g, '\n');
+  const privateKey = process.env.GOOGLE_PRIVATE_KEY && process.env.GOOGLE_PRIVATE_KEY.replace(/\n/g, '\n');
   if (!clientEmail || !privateKey) {
     // Generate a pseudo meeting link so scheduling still works in development
     return {
