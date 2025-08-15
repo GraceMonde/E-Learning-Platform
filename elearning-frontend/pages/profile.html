@@ -4,44 +4,52 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Profile</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
   <link rel="stylesheet" href="../assets/css/dashboard.css">
   <link rel="stylesheet" href="../assets/css/profile.css">
 </head>
 <body>
-  <header class="header">
-    <div class="logo">eLearnHub</div>
-    <nav>
-      <a href="navigation.html">Navigation</a>
-      <a href="#" id="logout">Logout</a>
-    </nav>
-  </header>
+  <div class="layout">
+    <aside id="sidebar" class="sidebar"></aside>
+    <div class="main">
+      <header class="header">
+        <div class="page-title">Profile</div>
+        <div class="header-actions">
+          <a href="#" id="logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+      </header>
+      <main class="profile-page">
+        <section class="profile-section">
+          <h2>Profile Information</h2>
+          <form id="profileForm">
+            <label for="name">Name</label>
+            <input type="text" id="name" required>
+            <label for="email">Email</label>
+            <input type="email" id="email" required>
+            <button type="submit">Update Profile</button>
+            <p id="profileMsg" class="msg"></p>
+          </form>
+        </section>
 
-  <main class="profile-page">
-    <section class="profile-section">
-      <h2>Profile Information</h2>
-      <form id="profileForm">
-        <label for="name">Name</label>
-        <input type="text" id="name" required>
-        <label for="email">Email</label>
-        <input type="email" id="email" required>
-        <button type="submit">Update Profile</button>
-        <p id="profileMsg" class="msg"></p>
-      </form>
-    </section>
+        <section class="password-section">
+          <h2>Change Password</h2>
+          <form id="passwordForm">
+            <label for="currentPassword">Current Password</label>
+            <input type="password" id="currentPassword" required>
+            <label for="newPassword">New Password</label>
+            <input type="password" id="newPassword" required>
+            <button type="submit">Change Password</button>
+            <p id="passwordMsg" class="msg"></p>
+          </form>
+        </section>
+      </main>
+    </div>
+  </div>
 
-    <section class="password-section">
-      <h2>Change Password</h2>
-      <form id="passwordForm">
-        <label for="currentPassword">Current Password</label>
-        <input type="password" id="currentPassword" required>
-        <label for="newPassword">New Password</label>
-        <input type="password" id="newPassword" required>
-        <button type="submit">Change Password</button>
-        <p id="passwordMsg" class="msg"></p>
-      </form>
-    </section>
-  </main>
-
+  <script src="../assets/js/sidebar.js"></script>
   <script src="../assets/js/profile.js"></script>
 </body>
 </html>

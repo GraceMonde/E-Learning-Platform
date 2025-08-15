@@ -4,55 +4,62 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Communication & Notifications</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer"/>
     <link rel="stylesheet" href="../assets/css/dashboard.css">
     <link rel="stylesheet" href="../assets/css/communication.css">
 </head>
 <body>
-    <header class="header">
-        <div class="logo">eLearnHub</div>
-        <nav>
-            <a href="navigation.html">Navigation</a>
-            <a href="profile.html">Profile</a>
-            <a href="#" id="logout">Logout</a>
-        </nav>
-    </header>
+    <div class="layout">
+        <aside id="sidebar" class="sidebar"></aside>
+        <div class="main">
+            <header class="header">
+                <div class="page-title">Communication</div>
+                <div class="header-actions">
+                    <a href="#" id="logout" title="Logout"><i class="fas fa-sign-out-alt"></i></a>
+                </div>
+            </header>
+            <main class="communication-page">
+                <section class="page-header">
+                    <h2>Communication & Notifications</h2>
+                    <div class="course-selector">
+                        <label for="courseSelect">Select Course:</label>
+                        <select id="courseSelect">
+                            <option value="">-- Choose a Course --</option>
+                        </select>
+                    </div>
+                </section>
 
-    <main class="communication-page">
-        <section class="page-header">
-            <h2>Communication & Notifications</h2>
-            <div class="course-selector">
-                <label for="courseSelect">Select Course:</label>
-                <select id="courseSelect">
-                    <option value="">-- Choose a Course --</option>
-                </select>
-            </div>
-        </section>
+                <section class="announce-section" style="display:none;">
+                    <h3>Announcements</h3>
+                    <form id="announceForm">
+                        <textarea id="announceMessage" placeholder="Write announcement"></textarea>
+                        <button type="submit">Post Announcement</button>
+                    </form>
+                    <div id="announcementsList"></div>
+                </section>
 
-        <section class="announce-section" style="display:none;">
-            <h3>Announcements</h3>
-            <form id="announceForm">
-                <textarea id="announceMessage" placeholder="Write announcement"></textarea>
-                <button type="submit">Post Announcement</button>
-            </form>
-            <div id="announcementsList"></div>
-        </section>
+                <section class="thread-section" style="display:none;">
+                    <h3>Discussion Threads</h3>
+                    <form id="threadForm">
+                        <input type="text" id="threadTitle" placeholder="Thread title">
+                        <textarea id="threadContent" placeholder="Start a discussion"></textarea>
+                        <button type="submit">Start Thread</button>
+                    </form>
+                    <div id="threadsList"></div>
+                </section>
 
-        <section class="thread-section" style="display:none;">
-            <h3>Discussion Threads</h3>
-            <form id="threadForm">
-                <input type="text" id="threadTitle" placeholder="Thread title">
-                <textarea id="threadContent" placeholder="Start a discussion"></textarea>
-                <button type="submit">Start Thread</button>
-            </form>
-            <div id="threadsList"></div>
-        </section>
+                <section class="notification-section" style="display:none;">
+                    <h3>Notifications</h3>
+                    <div id="notificationList"></div>
+                </section>
+            </main>
+        </div>
+    </div>
 
-        <section class="notification-section" style="display:none;">
-            <h3>Notifications</h3>
-            <div id="notificationList"></div>
-        </section>
-    </main>
-
+    <script src="../assets/js/sidebar.js"></script>
     <script src="../assets/js/communication.js"></script>
 </body>
 </html>
