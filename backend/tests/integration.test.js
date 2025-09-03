@@ -1,26 +1,25 @@
 const request = require("supertest");
 const express = require("express");
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 
-// Import your routers
+// Ensure a JWT secret for signing tokens during tests
+process.env.JWT_SECRET = process.env.JWT_SECRET || "testsecret";
+
+// Mock DB before importing routers so they use the mocked version
+jest.mock("../config/db", () => ({
+  query: jest.fn(),
+}));
+const db = require("../config/db");
+
+// Import routers after DB mock to avoid real DB connection
 const authRouter = require("../routes/auth");
 const profileRouter = require("../routes/profile");
-
-// Mock DB
-jest.mock("../config/db");
-const db = require("../config/db");
 
 // Create Express app for integration tests
 const app = express();
 app.use(express.json());
 app.use("/api/auth", authRouter);
 app.use("/profile", profileRouter);
-
-// Helper to generate JWT (fallback secret if not set)
-function generateToken(user_id = 1) {
-  return jwt.sign({ user_id }, process.env.JWT_SECRET || "testsecret", { expiresIn: "1h" });
-}
 
 describe("Integration Test: Auth → Profile Flow", () => {
   beforeAll(() => {
@@ -55,6 +54,12 @@ describe("Integration Test: Auth → Profile Flow", () => {
         return callback(null, [
           { user_id: 1, name: "Test User", email: "test@example.com", created_at: "2025-01-01" },
         ]);
+      }
+
+      // SELECT password_hash for change password
+      if (/SELECT password_hash FROM users WHERE user_id/i.test(sql)) {
+        const passwordHash = await bcrypt.hash("123456", 10);
+        return callback(null, [{ password_hash: passwordHash }]);
       }
 
       // UPDATE profile or password
