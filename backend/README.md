@@ -131,6 +131,83 @@ Run the test suite:
 npm test
 ```
 
+##  Test Categories
+a. Auth Tests
+
+Purpose: Ensure user authentication works correctly.
+
+Endpoints tested:
+
+POST /api/auth/register – Tests successful registration, missing fields, and duplicate emails.
+
+POST /api/auth/login – Tests successful login, incorrect password, and unknown email.
+
+POST /api/auth/logout – Tests logout flow with token validation.
+
+b. User Tests
+
+Purpose: Verify user registration and retrieval works as expected.
+
+Endpoints tested:
+
+POST /api/user/register – Tests validation, successful registration, and duplicate emails.
+
+GET /api/user – Tests retrieval of all users.
+
+c. Profile Tests
+
+Purpose: Ensure profile operations work for authenticated users.
+
+Endpoints tested:
+
+GET /profile – Tests retrieval of profile data, missing token, and non-existent user.
+
+PUT /profile – Tests updating user profile fields, missing fields, and error handling.
+
+PUT /profile/password – Tests changing password, missing fields, incorrect current password, and non-existent user.
+
+d. Analytics Tests
+
+Purpose: Verify analytics routes and calculations.
+
+Endpoints tested:
+
+GET /analytics/lectures – Tests responses with valid/invalid tokens, lecture counts, participants, and screen sharing stats.
+
+### Integration test
+
+The integration test simulates a real user flow across multiple endpoints:
+
+Register a new user
+
+-Sends POST /api/auth/register request with user details.
+
+-Checks for successful registration (status 201).
+
+Login with registered user
+
+-Sends POST /api/auth/login request.
+
+-Validates token issuance and successful login (status 200).
+
+Retrieve profile
+
+-Sends GET /profile with JWT token.
+
+-Validates correct user data is returned (status 200).
+
+Update profile information
+
+-Sends PUT /profile with updated fields.
+
+-Validates profile update is successful (status 200).
+
+Change password
+
+-Sends PUT /profile/password with current and new passwords.
+
+-Validates password change succeeds (status 200).
+
 ## Google Meet Integration
 
 ### Setup
