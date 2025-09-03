@@ -1,7 +1,17 @@
 # E-Learning Platform Backend
 
-This is the backend API for the E-Learning Platform web application.  
+This is the backend API for the E-Learning Platform web application.
 Built with Node.js, Express.js, and MySQL.
+
+## Features
+
+- Secure user authentication with JWT
+- Profile management and password updates
+- Class and lecture scheduling with Google Meet integration
+- Assignment creation and management
+- Upload and delivery of learning materials
+- Notifications, announcements, and discussion threads
+- Analytics endpoints for tracking platform usage
 
 ## Prerequisites
 
